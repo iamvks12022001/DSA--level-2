@@ -2,7 +2,7 @@
 using namespace std;
 
 class Student{
-    
+ public:
   int rollNUmber;
   int age;
 };
