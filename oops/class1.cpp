@@ -1,6 +1,20 @@
 #include<bits/stdc++.h>
 using namespace std;
-//why we use private variable
+// constructor
+//every constructor -must be called only one time in each object life (during object creation),work is to initilize the object property value,
+//not have return type, function name same as class name,for evey object a constructor is called either by deafult constructor or
+// user defined constructor
+//type of constructor-default,non perametrized,perametrized constructor
+
+// default constructor -no input(argument),not need to define the
+//constructor in class(it's generated automatically),initilize with garbage value.
+
+//structure of default constructer(present inside a Student class in background)
+
+// student(){
+
+// };
+
 class Student{
  public:
   int rollNUmber;
@@ -10,18 +24,16 @@ class Student{
   void display()
   {
     cout<<age<<" "<<rollNUmber<<endl;
-    //age and roll number can be acceseed easily as function is inside the class
+    
     
     
   }
   void getage()
   {
     cout<<"Age is :"<<age<<endl;
-    //to read private variable
   }
   void setage(int value,int password)
   {
-    // adding constraint before to set age
     if(password!=1234)
     {
       cout<<"not authorizes to access as password is wrong "<<endl;
@@ -32,27 +44,28 @@ class Student{
       return ;
     }
     age=value;
-    //we use this method so to set age value as age is private so we need method inside a class to set age value
   }
 };
 
 
 int main()
 {
-    Student s1; 
+    Student s1 ;// default constructor is called as just when you create a student object
+   //we not need to define the student constructer in class as it is generated automatically as 
+   //soon as you create student class
     int value,pass;
 
     cout<<"give password to set age";
-    cin>>pass; //give correct password to be authorizes to edit or set age
+    cin>>pass; 
     cout<<"give age";
     cin>>value;
     
-     s1.setage(value,pass);//to get age  value, we need to call a method as age is private ,we can't assign its value from main
-     s1.getage();//to read the private variable;
-     s1.rollNUmber=101;//since rollno is public so we can directly assign its value
+     s1.setage(value,pass);
+     s1.getage();
+     s1.rollNUmber=101;
      s1.display();
 
-    Student *s2=new Student; 
+    Student *s2=new Student; // default constructor is called 
     cout<<"give age";
     cin>>value;
     (*s2).setage(value,pass);
