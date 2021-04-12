@@ -1,19 +1,8 @@
 #include<bits/stdc++.h>
 using namespace std;
-// constructor
-//every constructor -must be called only one time in each object life (during object creation),work is to initilize the object property value,
-//not have return type, function name same as class name,for evey object a constructor is called either by deafult constructor or
-// user defined constructor
-//type of constructor-default,non perametrized,perametrized constructor
-
-// default constructor -no input(argument),not need to define the
-//constructor in class(it's generated automatically),initilize with garbage value.
-
-//structure of default constructer(present inside a Student class in background)
-
-// student(){
-
-// };
+// user define constructor(parametrized and non parametrized)
+// note as soon as we create your own constructor then default constructor get removed 
+//intiliazed with defined value
 
 class Student{
  public:
@@ -21,6 +10,24 @@ class Student{
  private:
   int age;
   public:
+  Student()//non parametrized constructor
+  {
+    //constructor -1
+    age=0;
+    rollNUmber=0;
+  }
+   Student(int r) //parametrized constructor
+  {
+       //constructor -2
+    age=0;
+    rollNUmber=r;
+  }
+   Student(int r, int a) //parametrized constructor
+  {
+       //constructor -3
+    age=a;
+    rollNUmber=r;
+  }
   void display()
   {
     cout<<age<<" "<<rollNUmber<<endl;
@@ -50,9 +57,7 @@ class Student{
 
 int main()
 {
-    Student s1 ;// default constructor is called as just when you create a student object
-   //we not need to define the student constructer in class as it is generated automatically as 
-   //soon as you create student class
+    Student s1 ;// constructor called
     int value,pass;
 
     cout<<"give password to set age";
@@ -65,7 +70,7 @@ int main()
      s1.rollNUmber=101;
      s1.display();
 
-    Student *s2=new Student; // default constructor is called 
+    Student *s2=new Student; // constructor called 
     cout<<"give age";
     cin>>value;
     (*s2).setage(value,pass);
@@ -81,4 +86,14 @@ int main()
     s2->rollNUmber=103;
     s2->display();
 
+    Student s3; //called non -parametrized constructor-1
+    s3.display();
+    Student *s4=new Student(108);//called parametrized constructor-2
+    (*s4).display();
+     Student *s5=new Student(108,20);//called parametrized constructor-3
+    s5->display();
+
+// note if you doesnot have non parmetrized constructor but have parametrized constructor
+//and you make object without passing argument then compiler give error bcz as you have parmetrized constructor then 
+//it means default constructor is gone and there is no any constructor left to called object of no argument.
 }
