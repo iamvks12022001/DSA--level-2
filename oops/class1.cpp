@@ -14,6 +14,11 @@ class Student{
     
     
   }
+  void getage()
+  {
+    cout<<"Age is :"<<age<<endl;
+    //to read private variable
+  }
   void setage(int value)
   {
     age=value;
@@ -29,6 +34,7 @@ int main()
     cout<<"give age";
     cin>>value;
      s1.setage(value);//to get age  value, we need to call a method as age is private ,we can't assign its value from main
+     s1.getage();//to read the private variable;
      s1.rollNUmber=101;//since rollno is public so we can directly assign its value
      s1.display();
 
@@ -36,6 +42,7 @@ int main()
     cout<<"give age";
     cin>>value;
     (*s2).setage(value);
+    (*s2).getage();
     (*s2).rollNUmber=102;
     (*s2).display();
 
@@ -43,6 +50,7 @@ int main()
     cout<<"give age";
     cin>>value;
     s2->setage(value);
+    s2->getage();
     s2->rollNUmber=103;
     s2->display();
 
