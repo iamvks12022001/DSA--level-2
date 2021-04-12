@@ -1,32 +1,41 @@
 #include<bits/stdc++.h>
 using namespace std;
-// user define constructor(parametrized and non parametrized)
-// note as soon as we create your own constructor then default constructor get removed 
-//intiliazed with defined value
-
+// user of this keyword
+//' this ' keyword is used to reffered a current object.
+//'this ' keyword have address of current object.
+// this is pointer
 class Student{
  public:
   int rollNUmber;
  private:
   int age;
   public:
-  Student()//non parametrized constructor
+  Student()
   {
     //constructor -1
     age=0;
     rollNUmber=0;
   }
-   Student(int r) //parametrized constructor
+   Student(int r) 
   {
        //constructor -2
-    age=0;
+    this->age=0;//(this is optional to use this here)
     rollNUmber=r;
   }
-   Student(int r, int a) //parametrized constructor
+   Student(int rollNUmber, int age)
   {
-       //constructor -3
-    age=a;
-    rollNUmber=r;
+      //this will give error bcz both variable reffered to same local variable 
+      //in age=age and in rollNumber=rollNUmber
+
+   /*   age=age;
+    rollNUmber=rollNUmber;  */
+ // so to reffered the obj variable can we do like this s1.age=age (ans NO at that 
+ //place we not know s1 and everytime object changes)
+ 
+      //so we have to use 'this' keyword bcz this->age reffered to object variable
+    
+    (*this).age=age;
+     this->rollNUmber=rollNUmber;
   }
   void display()
   {
@@ -93,7 +102,5 @@ int main()
      Student *s5=new Student(108,20);//called parametrized constructor-3
     s5->display();
 
-// note if you doesnot have non parmetrized constructor but have parametrized constructor
-//and you make object without passing argument then compiler give error bcz as you have parmetrized constructor then 
-//it means default constructor is gone and there is no any constructor left to called object of no argument.
+
 }
