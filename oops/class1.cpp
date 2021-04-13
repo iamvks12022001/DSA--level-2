@@ -1,26 +1,11 @@
 #include<bits/stdc++.h>
 using namespace std;
-//inbuilt constructor 
-//1.default constructor -already discussed
-//2.copy constructor -not need to define it's created automaticaly
-        //copy construtor make copy of object which is passed
-        //ex..  student s2(s1);
-        // it means s2.rollNUmber=s1.rollNUmber and s2.age=s1.age;
-//3.copy assignment operator -not need to define it's created automaticaly
-        //ex..  student s1(10,100),s2(20,200); 
-              // s2=s1;
-              //it means s2.age=s1.age and s2.rollNUmber=s1.rollNUmber 
-//4.destructor -not need to define it's created automaticaly
-        //  use to deallocate the memory of object
-        //it have same name as of class,no return type,no input argument
-        //~ symbol is use before class name to make a destructor
-        //called once in a life time of object
-        //destructor is called just when object lost its scope or going to be destroy
-        //note when function end all the Student object which is created statically 
-        //distroyed automatically so student destructor also get called
-        //but when obj is created dynamically then we have explicitly delete all the 
-        //dynamically created obj so that it's destructor also get called otherwise it's
-        //destructor not get called
+// copy assignment operator id not a constructor
+ //copy assignment operator work only when both of its object already in memory
+ //ex...Student s1,s2;
+       //s1=s2  this is copy assignment operator
+// note this statement student s1=s2; is not copy assignment operator as s2 is not in memory
+// this line is interpreted as Student s1=s2;=> Student s1(s2); i.e call copy constructor
 class Student{
  public:
   int rollNUmber;
