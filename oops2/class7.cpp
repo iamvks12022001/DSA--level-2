@@ -1,15 +1,20 @@
 #include<bits/stdc++.h>
 using namespace std;
-//automatic increse of static variable as we create obj of student
+//static function to calculate total number of student
 class Student{
+    private:
+        static int totalstudent; //total number of student present
     public:
-    int roolNo;
-    int age;
+        int roolNo;
+        int age;
 
-    static int totalstudent; //total number of student present
-     Student()
+    
+     Student() //constructor increase the count of total student
      {
          totalstudent++;
+     }
+    static int getTotalStudent(){
+         return totalstudent;
      }
 };
 int Student ::totalstudent=0; 
@@ -17,6 +22,6 @@ int Student ::totalstudent=0;
 int main(){
     Student s1,s2,s3,s4,s5;
 
- cout<<Student :: totalstudent<<endl;  
+ cout<<Student :: getTotalStudent()<<endl;  //to access static date member
 
 }
