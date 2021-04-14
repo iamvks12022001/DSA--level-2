@@ -2,21 +2,29 @@
 using namespace std;
 
 class Student {
+   
     int age;
+     public:
     char *name;
     public:
     Student(int age,char *name)
     {
         this->age=age;
-        //shallow copy (which needed to be avoided)
-        //this->name=name;
-
-        //Deep copy (whixh is preferable)
+        
         this->name=new char[strlen(name)+1];
         strcpy(this->name,name);
 
     }
-    
+    //redefining copy constructor to solve problem of shallow copy
+
+    Student(Student s)//again Student s=main.s1=> s(s1)=>agin call copy constructor
+    {                 //(which is define by us as default constructor is gone) so it go for infinte loop
+        this->age=s.age;
+        //Deep Copy
+        this->name=new char[strlen(s.name)+1];
+        strcpy(name,s.name);
+
+    }
     void display()
     {
         cout<<name<<" "<<age<<endl;
@@ -30,10 +38,10 @@ int main()
     Student s1(20,name);
     s1.display();
 
-    name[3]='e';
-    Student s2(24,name);
+   Student s2(s1);
+    name[0]='e';//this will not change name in object s1 and s2
+    s1.name[0]='x';//this will change name in both s1 and s2 so act like shallow copy
+ 
     s2.display();
-
-    s1.display();//in shalow copy it give answer abce 20
-                 //in   deep copy it give answer abcd 20
+    s1.display();
 }
