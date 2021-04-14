@@ -5,17 +5,17 @@ class Student {
 public:
 int age;
 const int rollno;
+int &x; //age refernce data member
 
 
-Student(int r ):rollno(r)//=> const int rollno =r; so now rollno not get garbag value
-{
-}
+Student(int r,int age ):rollno(r),age(age),x(age)//=> const int rollno =r; so now rollno not get garbag value
+{                                                       //int this->age=age;
+}                                                        //int &x=age;
 
 };
 
 int main()
 {
-    Student s1(233);
-    s1.age=10;
-    //s1.rollno=233;
+    Student s1(233,20);
+    
 }
