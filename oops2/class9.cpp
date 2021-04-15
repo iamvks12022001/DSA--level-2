@@ -10,15 +10,15 @@ class DynamicArray {
 	public :
 
 	DynamicArray() {
-		data = new int[5];
+		data = new int[5]; //intializing the array size and index;
 		nextIndex = 0;
 		capacity = 5;
 	}
-
+// to do deep copy in copy constructor
 	DynamicArray(DynamicArray const &d) {
 		//this -> data = d.data;		// Shallow copy
 		
-		// Deep copy
+		// Deep copy for data so that data point to newly created  array
 		this -> data = new int[d.capacity];
 		for(int i = 0; i < d.nextIndex; i++) {
 			this -> data[i] = d.data[i];
@@ -27,6 +27,7 @@ class DynamicArray {
 		this -> capacity = d.capacity;
 	}
 
+// to do deep copy in copy assignment operator by overloading = operator
 	void operator=(DynamicArray const &d) {
 		this -> data = new int[d.capacity];
 		for(int i = 0; i < d.nextIndex; i++) {
@@ -60,7 +61,7 @@ class DynamicArray {
 		}
 	}
 
-	void add(int i, int element) {
+	void add(int i, int element) { //adding element from [0 to nextindex]
 			if(i < nextIndex) {
 				data[i] = element;
 			}
@@ -97,8 +98,11 @@ int main() {
 	d1.print();
 
 	DynamicArray d2(d1);		// Copy constructor
+                                //copy constructor always make shallow copy that is not make new array
+                                //so whenever we change in d1 it also make chnages in d2 as well
+                                 //so we have to make our own copy constructor so that we do deep copy not shallow copy(as in default copy construtor)
 
-	DynamicArray d3;
+	DynamicArray d3; //this is copy assignment operator who also do shallow copy alaways
 
 	d3 = d1;
 
