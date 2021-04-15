@@ -44,7 +44,7 @@ class Fraction {
 
 		Fraction operator+(Fraction const &f2) const {  //fraction f3=f1+f2 ke liya
 			int lcm = denominator * f2.denominator;     //overloading + opertor
-			int x = lcm / denominator;
+			int x = lcm / denominator;                 //we mark them as a constant function  bcz it doesnot change it's this object value 
 			int y = lcm / f2.denominator;
 
 			int num = x * numerator + (y * f2.numerator);
@@ -56,14 +56,14 @@ class Fraction {
 
 		Fraction operator*(Fraction const &f2) const { //fraction f3=f1*f2 ke liya
 			int n = numerator * f2.numerator;          //overloading * opertor
-			int d = denominator * f2.denominator;
+			int d = denominator * f2.denominator;     //we mark them as a constant function  bcz it doesnot change it's this object value 
 			Fraction fNew(n, d);
 			fNew.simplify();
 			return fNew;
 		}
 
 		bool operator==(Fraction const &f2) const { //for f1==f2 ke liya  //overloading ==  opertor
-			return (numerator == f2.numerator && denominator == f2.denominator);
+			return (numerator == f2.numerator && denominator == f2.denominator); //we mark them as a constant function  bcz it doesnot change it's this object value 
 		}
 
 
