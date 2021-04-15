@@ -30,7 +30,7 @@ class Fraction {
 			this -> denominator = this -> denominator / gcd;
 		}
 
-		Fraction add(Fraction const &f2) { //fraction f3=f1.add(f2) ke liya;
+		Fraction add(Fraction const &f2) {
 			int lcm = denominator * f2.denominator;
 			int x = lcm / denominator;
 			int y = lcm / f2.denominator;
@@ -42,9 +42,9 @@ class Fraction {
 			return fNew;
 		}
 
-		Fraction operator+(Fraction const &f2) const {  //fraction f3=f1+f2 ke liya
-			int lcm = denominator * f2.denominator;     //overloading + opertor
-			int x = lcm / denominator;                 //we mark them as a constant function  bcz it doesnot change it's this object value 
+		Fraction operator+(Fraction const &f2) const {
+			int lcm = denominator * f2.denominator;
+			int x = lcm / denominator;
 			int y = lcm / f2.denominator;
 
 			int num = x * numerator + (y * f2.numerator);
@@ -54,48 +54,57 @@ class Fraction {
 			return fNew;
 		}
 
-		Fraction operator*(Fraction const &f2) const { //fraction f3=f1*f2 ke liya
-			int n = numerator * f2.numerator;          //overloading * opertor
-			int d = denominator * f2.denominator;     //we mark them as a constant function  bcz it doesnot change it's this object value 
+		Fraction operator*(Fraction const &f2) const {
+			int n = numerator * f2.numerator;
+			int d = denominator * f2.denominator;
 			Fraction fNew(n, d);
 			fNew.simplify();
 			return fNew;
 		}
 
-		bool operator==(Fraction const &f2) const { //for f1==f2 ke liya  //overloading ==  opertor
-			return (numerator == f2.numerator && denominator == f2.denominator); //we mark them as a constant function  bcz it doesnot change it's this object value 
+		bool operator==(Fraction const &f2) const {
+			return (numerator == f2.numerator && denominator == f2.denominator);
 		}
 
-
-		void multiply(Fraction const &f2) {    //fraction f3=f1.multiply(f2) ke liya
+		void multiply(Fraction const &f2) {
 			numerator = numerator * f2.numerator;
 			denominator = denominator * f2.denominator;
 			
 			simplify();
 		}
 
+		// Pre-increment
+		Fraction& operator++() { //use & so that it incrase in f1 always
+			numerator = numerator + denominator;
+			simplify();
+
+			return *this;
+		}
+
 };
+
 
 int main() {
 	Fraction f1(10, 2);
 	Fraction f2(15, 4);
 
-	Fraction f3 = f1.add(f2);
-	Fraction f4 = f1 + f2;
 	f1.print();
-	f2.print();
+	Fraction f3 = ++(++f1);
+	f1.print();
 	f3.print();
-	f4.print();
 
-	Fraction f5 = f1 * f2;
-	f5.print();
 
-	if(f1 == f2) {
-		cout << "Equal" << endl;
-	}
-	else {
-		cout << "Not equal " << endl;
-		
-	}
 
+
+
+	//++f1;
+	//f1.print();
+
+	/*
+	Fraction f3 = ++f1;
+	f1.print();
+	f3.print();
+	*/
+	
 }
+
