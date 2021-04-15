@@ -19,3 +19,4 @@ int main()
     Student s1(233,20);
     
 }
+
