@@ -52,7 +52,7 @@ class DynamicArray {
 		nextIndex++;
 	}
 
-	int get(int i) const {
+	int get(int i) const {  //get function can be make constant function
 		if(i < nextIndex) {
 			return data[i];
 		}
@@ -73,7 +73,7 @@ class DynamicArray {
 			}
 	}
 
-	void print() const {
+	void print() const { // print function can be make constant function
 		for(int i = 0; i < nextIndex; i++) {
 			cout << data[i] << " ";
 		}
