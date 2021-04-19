@@ -317,6 +317,20 @@ int findmiddle(node *head,node *slow,node *fast)
     return findmiddle(head->addr,slow->addr,fast->addr->addr);
     
 }
+node* findmiddlepointer(node *head,node *slow,node *fast)
+{
+   
+    if(fast==NULL)
+    {
+       return head;
+    }
+    if(fast->addr==NULL)
+    {
+         return head;
+    }
+    return findmiddlepointer(head->addr,slow->addr,fast->addr->addr);
+    
+}
 pair<node* ,node * > mergell(node *head,node *head1){
 
 	
@@ -376,6 +390,36 @@ pair<node* ,node * > mergell(node *head,node *head1){
 
 	return finalpointer;
 }
+
+
+void mergeSort(node *&head,node *&tail){
+
+	
+
+    if(head!=tail && head!=NULL)
+	{
+
+		node * temp=tail->addr;
+		tail->addr=NULL;
+		node* head1=findmiddlepointer(head,head,head->addr);
+
+        mergeSort(head,head1);
+		mergeSort(head1->addr,tail);
+		pair<node *,node *> finalpointer;
+	
+		node *temp1=head1->addr;
+		head1->addr=NULL;
+		
+		finalpointer=mergell(head,temp1);
+		head=finalpointer.first;
+		tail=finalpointer.second;
+		tail->addr=temp;
+
+		
+        
+	}
+	
+}
 int main()
 {
 	node *head=NULL;
@@ -415,10 +459,10 @@ int main()
 	// cout<<"first item data "<<head->data<<endl;
 	// cout<<"last item data "<<tail->data<<endl;
    
- //    cout<<"To insert node  at index i give i ? :"<<endl;
+    // cout<<"To insert node  at index i give i ? :"<<endl;
 	// int in=0;
 	// cin>>in;
- //    cout<<"Data ? :"<<endl;
+    // cout<<"Data ? :"<<endl;
 	// int data=0;
 	// cin>>data;
 	// int res=insertRecurrsive(head,in-1,data,tail);
@@ -537,32 +581,39 @@ int main()
 
 //to merge two sorted linklist
 
-	   cout<<"to merge two sorted list"<<endl;
-	   cout<<"provide another shorted linklist "<<endl;
+	//    cout<<"to merge two sorted list"<<endl;
+	//    cout<<"provide another shorted linklist "<<endl;
 
-    node *head1=NULL;
-	node *tail1=NULL;
-	cout<<"give the values for liked list and press -1 if you finished the insertion of input value"<<endl;
+    // node *head1=NULL;
+	// node *tail1=NULL;
+	// cout<<"give the values for liked list and press -1 if you finished the insertion of input value"<<endl;
 
-	int i1=0;
-	cin>>i1;
+	// int i1=0;
+	// cin>>i1;
 	
-	while(i1!=-1)
-	{
+	// while(i1!=-1)
+	// {
 		
-		insertLL(i1,head1,tail1);
+	// 	insertLL(i1,head1,tail1);
 	
-		cin>>i1;
-	}
+	// 	cin>>i1;
+	// }
    
-	printLL(head1);
-    pair<node *,node *> finalpointer;
-	finalpointer=mergell(head,head1);
-	head=finalpointer.first;
-	tail=finalpointer.second;
+	// printLL(head1);
+    // pair<node *,node *> finalpointer;
+	// finalpointer=mergell(head,head1);
+	// head=finalpointer.first;
+	// tail=finalpointer.second;
    
-    printLL(head);
+    // printLL(head);
    
 
+//merge sort
+  
+  if(head!=NULL){
+  mergeSort(head,tail);
+  }
+  printLL(head);
+  cout<<head->data<<" "<<tail->data<<endl;
     main();
 }
