@@ -317,6 +317,65 @@ int findmiddle(node *head,node *slow,node *fast)
     return findmiddle(head->addr,slow->addr,fast->addr->addr);
     
 }
+pair<node* ,node * > mergell(node *head,node *head1){
+
+	
+	pair<node *,node *> finalpointer;
+
+	int firsttime=0;
+	while(head!=NULL && head1!=NULL)
+	{
+        if(head->data < head1->data)
+		{
+			if(firsttime==0)
+			{
+				finalpointer.first=head;	
+				finalpointer.second=head;			
+				firsttime++;
+			}
+			else{
+		   finalpointer.second->addr=head;
+           finalpointer.second=head;
+			}
+		   head=head->addr;
+		}
+		else{
+
+			if(firsttime==0)
+			{
+				finalpointer.first=head1;	
+				finalpointer.second=head1;			
+				firsttime++;
+			}
+			else{
+			 finalpointer.second->addr=head1;
+             finalpointer.second=head1;
+			}	
+		      head1=head1->addr;
+		}
+	}
+
+	if(head==NULL)
+	{
+		while(head1!=NULL)
+		{
+			 finalpointer.second->addr=head1;
+             finalpointer.second=head1;
+		     head1=head1->addr;
+		}
+	}
+
+	if(head1==NULL)
+	{
+		while(head!=NULL){
+		   finalpointer.second->addr=head;
+           finalpointer.second=head;
+		   head=head->addr;
+		}
+	}
+
+	return finalpointer;
+}
 int main()
 {
 	node *head=NULL;
@@ -460,19 +519,50 @@ int main()
 	// 	cout<<"No it is not Palindrom"<<endl;
 	// }
    
-   cout<<"To check middle of linklist by finding length of LL"<<endl;
-   int l=lengthOfLLrecursive(head,0);
-    if(l%2==0)
-    {
-        cout<<atindex(head,(l/2) -1)<<" "<<atindex(head,l/2)<<endl;;
+//    cout<<"To check middle of linklist by finding length of LL"<<endl;
+//    int l=lengthOfLLrecursive(head,0);
+//     if(l%2==0)
+//     {
+//         cout<<atindex(head,(l/2) -1)<<" "<<atindex(head,l/2)<<endl;;
 
-    }else{
-          cout<<atindex(head,l/2)<<endl;;
-    }
+//     }else{
+//           cout<<atindex(head,l/2)<<endl;;
+//     }
 
-     cout<<"To check middle of linklist by without finding length of LL"<<endl;
-       if(head!=NULL){
-      cout<<findmiddle(head,head,head->addr)<<endl;
-       }
+//      cout<<"To check middle of linklist by without finding length of LL"<<endl;
+//        if(head!=NULL){
+//       cout<<findmiddle(head,head,head->addr)<<endl;
+//        }
+
+
+//to merge two sorted linklist
+
+	   cout<<"to merge two sorted list"<<endl;
+	   cout<<"provide another shorted linklist "<<endl;
+
+    node *head1=NULL;
+	node *tail1=NULL;
+	cout<<"give the values for liked list and press -1 if you finished the insertion of input value"<<endl;
+
+	int i1=0;
+	cin>>i1;
+	
+	while(i1!=-1)
+	{
+		
+		insertLL(i1,head1,tail1);
+	
+		cin>>i1;
+	}
+   
+	printLL(head1);
+    pair<node *,node *> finalpointer;
+	finalpointer=mergell(head,head1);
+	head=finalpointer.first;
+	tail=finalpointer.second;
+   
+    printLL(head);
+   
+
     main();
 }
