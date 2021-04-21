@@ -420,6 +420,19 @@ void mergeSort(node *&head,node *&tail){
 	}
 	
 }
+
+node * ReverseLL(node * head ,node * tail){
+
+	if(head==tail)
+	{
+		return head;
+	}
+
+	tail=ReverseLL(head->addr,tail);
+	tail->addr=head;
+	return head; 
+
+}
 int main()
 {
 	node *head=NULL;
@@ -610,10 +623,19 @@ int main()
 
 //merge sort
   
-  if(head!=NULL){
-  mergeSort(head,tail);
-  }
-  printLL(head);
-  cout<<head->data<<" "<<tail->data<<endl;
+//   if(head!=NULL){
+//   mergeSort(head,tail);
+//   }
+//   printLL(head);
+//   cout<<head->data<<" "<<tail->data<<endl;
+
+//Reverse the linklist
+
+node * temp=tail;
+ tail=ReverseLL(head,tail);
+tail->addr=NULL;
+head=temp;
+printLL(head);
+
     main();
 }
