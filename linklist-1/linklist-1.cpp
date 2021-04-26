@@ -302,6 +302,28 @@ void checkPalindrom(vector<int> &v,vector<int> &u,node *head)
   u.insert(u.begin(),head->data);
   checkPalindrom(v,u,head->addr);
 }
+
+node * BubbSort(node * head)
+{
+	if(head->addr==NULL)
+	{
+		node *f=head;
+		return f;
+	}
+   node *d=head;
+   if(head->data>head->addr->data)
+   {
+	   d=head->addr;
+         head->addr=head->addr->addr;
+		 d->addr=head;
+   }
+   if(head->addr!=NULL){
+   node *g=BubbSort(head->addr);
+    head->addr=g;
+   }
+  
+   return d;
+}
 int main()
 {
 	node *head=NULL;
@@ -432,17 +454,30 @@ int main()
 //        cout<<"first item data "<<head->data<<endl;
 // 	cout<<"last item data "<<tail->data<<endl;
 
-	cout<<"Check Palindrom"<<endl;
-	vector<int> v;
-	vector<int> u;
-	checkPalindrom(v,u,head);
+	// cout<<"Check Palindrom"<<endl;
+	// vector<int> v;
+	// vector<int> u;
+	// checkPalindrom(v,u,head);
 
-	if(v==u)
-	{
-		cout<<"Yes it is Palindrom"<<endl;
-	}
-	else{
-		cout<<"No it is not Palindrom"<<endl;
-	}
+	// if(v==u)
+	// {
+	// 	cout<<"Yes it is Palindrom"<<endl;
+	// }
+	// else{
+	// 	cout<<"No it is not Palindrom"<<endl;
+	// }
+
+
+//Bubble sort
+
+
+  int l=lengthOfLLrecursive(head,0);
+  while(l>=0){
+	head=BubbSort(head);
+	printLL(head);
+	cout<<endl;
+	l--;
+  }
+	
    main();
 }
