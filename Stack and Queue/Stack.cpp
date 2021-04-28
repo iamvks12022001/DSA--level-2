@@ -6,13 +6,12 @@ class StackUsingArray{
     int nextIndex;
     int capacity;
     public:
-    StackUsingArray(int totalSize){
-        data=new int[totalSize];
+    StackUsingArray(){
+        data=new int[4];
         nextIndex=0;
-        capacity=totalSize;
+        capacity=4; //fixing the size of arraay at initiale satge
     }
 
-    // return the number of element present in my stack
 
     int size(){
         return nextIndex;
@@ -20,28 +19,32 @@ class StackUsingArray{
 
     bool isEmpty()
     {
-        // if(nextIndex==0 ){
-        //     return true;
-        // }
-        // else{
-        //     return false;
-        // }
+        
 
         return nextIndex==0;
     }
-    //insert element
 
     void push(int element){
         if(nextIndex==capacity)
         {
-            cout<<"Stack is full"<<endl;
-            return;
+            //create new array
+            int *newdata=new int[2*capacity];
+            for(int i=0;i<capacity;i++)
+            {
+                newdata[i]=data[i];
+            }
+            capacity=2*capacity;
+            delete[] data; //The delete operator deallocates memory and calls the 
+                          //destructor for a single object created with new.
+                          // The delete [] operator deallocates memory and calls
+                         // destructors for an array of objects created with new [].
+            data=newdata;
+
         }
         data[nextIndex]=element;
         nextIndex++;
     }
 
-    // delete the element
     int pop(){
         if(nextIndex==0)
         {
@@ -51,7 +54,6 @@ class StackUsingArray{
         nextIndex--;
         return data[nextIndex];
     }
-  //to return top most element
 
   int top(){
       if(nextIndex==0)
@@ -65,7 +67,7 @@ class StackUsingArray{
 
 int main()
 {
-    StackUsingArray s(4);
+    StackUsingArray s;
     s.push(10);
     s.push(20);
     s.push(30);

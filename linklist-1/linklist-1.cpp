@@ -465,7 +465,7 @@ int main()
 	// }
 	// else{
 	// 	cout<<"No it is not Palindrom"<<endl;
-	// }
+	// } 
 
 
 //Bubble sort
