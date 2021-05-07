@@ -1,13 +1,13 @@
 #include<bits/stdc++.h>
 using namespace std;
-
+template<typename T> 
 class StackUsingArray{
-    int *data;
+    T *data;
     int nextIndex;
     int capacity;
     public:
     StackUsingArray(){
-        data=new int[4];
+        data=new T[4];
         nextIndex=0;
         capacity=4; //fixing the size of arraay at initiale satge
     }
@@ -24,11 +24,11 @@ class StackUsingArray{
         return nextIndex==0;
     }
 
-    void push(int element){
+    void push(T element){
         if(nextIndex==capacity)
         {
             //create new array
-            int *newdata=new int[2*capacity];
+            T *newdata=new T[2*capacity];
             for(int i=0;i<capacity;i++)
             {
                 newdata[i]=data[i];
@@ -45,21 +45,21 @@ class StackUsingArray{
         nextIndex++;
     }
 
-    int pop(){
+    T pop(){
         if(nextIndex==0)
         {
             cout<<"Stack is Empty"<<endl;
-            return INT_MIN;
+            return 0;
         }
         nextIndex--;
         return data[nextIndex];
     }
 
-  int top(){
+  T top(){
       if(nextIndex==0)
       {
           cout<<"Stack is Empty"<<endl;
-          return INT_MIN;
+          return 0;
       }
       return data[nextIndex-1];
   }
@@ -67,17 +67,30 @@ class StackUsingArray{
 
 int main()
 {
-    StackUsingArray s;
-    s.push(10);
-    s.push(20);
-    s.push(30);
-    s.push(40);
-    s.push(50);
+    StackUsingArray<char> s; //now char is also passed in our stack
+    s.push('a');
+    s.push('b');
+    s.push('c');
+    s.push('e');
+    s.push('f');
     cout<<s.top()<<endl;
     cout<<s.pop()<<endl;
     cout<<s.pop()<<endl;
     cout<<s.pop()<<endl;
     cout<<s.size()<<endl;
     cout<<s.isEmpty()<<endl;
+
+    StackUsingArray<double> s1; //now char is also passed in our stack
+    s1.push(20);
+    s1.push(30);
+    s1.push(40);
+    s1.push(50);
+    s1.push(60);
+    cout<<s1.top()<<endl;
+    cout<<s1.pop()<<endl;
+    cout<<s1.pop()<<endl;
+    cout<<s1.pop()<<endl;
+    cout<<s1.size()<<endl;
+    cout<<s1.isEmpty()<<endl;
 
 }
