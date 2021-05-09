@@ -31,11 +31,11 @@ class StackLL{
    }
 
    bool isEmpty(){
-       if(head==NULL)
+        if(head==NULL)
        {
-           return false;
+           return true;
        }
-       return true;
+       return false;
    }
 
   void push(T element){
