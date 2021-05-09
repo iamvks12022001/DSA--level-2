@@ -2,7 +2,7 @@
 using namespace std;
 
 int main(){
-    stack<int> s;
+    stack<char> s;
     s.push('a');
     s.push('b');
     s.push('c');
