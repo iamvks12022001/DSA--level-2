@@ -1,6 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 template<typename T> 
+//in  case of dynamic array
 class QueueUsingArray{
     T *data;
     int nextindex;
@@ -26,8 +27,21 @@ class QueueUsingArray{
 
     void enqueue(T element){
         if(size==capacity){
-            cout<<"Queue is full"<<endl;
-            return;
+         
+         T *newData=new T[2*capacity];
+         for(int i=0;i<capacity;i++)
+         {
+             newData[i]=data[firstindex];
+             firstindex=(firstindex+1)%capacity;
+         }
+         firstindex=0;
+         nextindex=capacity;
+         size=capacity;
+         capacity=2*capacity;
+         delete []data;
+         data=newData;
+            // cout<<"Queue is full"<<endl;
+            // return;
         }
         data[nextindex]=element; 
         nextindex=(nextindex+1)%capacity;
