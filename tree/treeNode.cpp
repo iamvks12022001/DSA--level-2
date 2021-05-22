@@ -58,7 +58,15 @@ void printTree(TreeNode<T>* root){
     }
 
 }
-
+int sumOfNodes(TreeNode<int>* root)
+{
+    int sum=root->data;
+     for(int i=0;i<root->children.size();i++)
+    {
+       sum+=sumOfNodes(root->children[i]);
+    }
+    return sum;
+}
 int numberOfNodes(TreeNode<int>* root)
 {
     if(root->children.size()==0)
@@ -117,6 +125,8 @@ TreeNode<int>* root = takeInputLevelWise() ;
   printTree(root);
 
   printLevelWise(root);
-  cout<<numberOfNodes(root);
+  cout<<numberOfNodes(root)<<endl;
+  cout<<sumOfNodes(root)<<endl;
+
   //to Do is to delete the delete
 }
