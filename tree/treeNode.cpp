@@ -59,6 +59,19 @@ void printTree(TreeNode<T>* root){
 
 }
 
+int numberOfNodes(TreeNode<int>* root)
+{
+    if(root->children.size()==0)
+    { 
+        return 1;    //agar base case hata be da tabhi run karega correcty
+    }
+    int count=0;
+    for(int i=0;i<root->children.size();i++)
+    {
+       count+=numberOfNodes(root->children[i]);
+    }
+    return count+1;
+}
 void printLevelWise(TreeNode<int>* root)
 {
 
@@ -104,5 +117,6 @@ TreeNode<int>* root = takeInputLevelWise() ;
   printTree(root);
 
   printLevelWise(root);
+  cout<<numberOfNodes(root);
   //to Do is to delete the delete
 }
