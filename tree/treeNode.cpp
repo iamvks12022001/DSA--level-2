@@ -67,6 +67,21 @@ int sumOfNodes(TreeNode<int>* root)
     }
     return sum;
 }
+int maxOfNodes(TreeNode<int>* root)
+{
+    int max=root->data;
+    for(int i=0;i<root->children.size();i++)
+    {
+        int temp;
+        temp=maxOfNodes(root->children[i]);
+        if(temp>max)
+        {
+            max=temp;
+        }
+
+    }
+    return max;
+}
 int numberOfNodes(TreeNode<int>* root)
 {
     if(root->children.size()==0)
@@ -127,6 +142,7 @@ TreeNode<int>* root = takeInputLevelWise() ;
   printLevelWise(root);
   cout<<numberOfNodes(root)<<endl;
   cout<<sumOfNodes(root)<<endl;
+  cout<<maxOfNodes(root)<<endl;
 
   //to Do is to delete the delete
 }
