@@ -11,6 +11,36 @@ class TreeNode{
         this->data=data;
     }
 };
+
+TreeNode<int>* takeInputLevelWise() {
+	int rootData;
+	cout << "Enter root data" << endl;
+	cin >> rootData;
+	TreeNode<int>* root = new TreeNode<int>(rootData);
+
+	queue<TreeNode<int>*> pendingNodes;
+	
+	pendingNodes.push(root);
+	while (pendingNodes.size() != 0) {
+		TreeNode<int>* front = pendingNodes.front();
+		pendingNodes.pop();
+		cout << "Enter num of children of " << front->data << endl;
+		int numChild;
+		cin >> numChild;
+		for (int i = 0; i < numChild; i++) {
+			int childData;
+			cout << "Enter " << i << "th child of " << front->data << endl;
+			cin >> childData;
+			TreeNode<int>* child = new TreeNode<int>(childData); //note if you create node statically then that memory space
+              //will be gone when the function end and we cant able to print that node data in other function
+			front->children.push_back(child);
+			pendingNodes.push(child);
+		}
+	}
+	return root;
+}
+
+
 template<typename T>
 void printTree(TreeNode<T>* root){
     //function to print tree node 
@@ -27,6 +57,25 @@ void printTree(TreeNode<T>* root){
         printTree(root->children[i]);
     }
 
+}
+
+void printLevelWise(TreeNode<int>* root)
+{
+
+   queue<TreeNode<int>*> p1;
+   p1.push(root);
+   while(!p1.empty())
+   {
+       TreeNode<int>* topnode=p1.front();
+       p1.pop();
+        cout<<topnode->data<<": ";
+        for(int i=0;i<topnode->children.size();i++)
+        {
+           cout<<topnode->children[i]->data<<",";
+           p1.push(topnode->children[i]);
+        }
+        cout<<endl;
+   }
 }
 
 TreeNode<int>* takeInput(){
@@ -50,15 +99,10 @@ TreeNode<int>* takeInput(){
 
 int main()
 {
-//   TreeNode<int>* root=new TreeNode<int>(1);
-//   TreeNode<int>* node1=new TreeNode<int>(2);
-//   TreeNode<int>* node2=new TreeNode<int>(3);
-  
-//   root->children.push_back(node1);
-//   root->children.push_back(node2);
 
-
-TreeNode<int>* root =takeInput();
+TreeNode<int>* root = takeInputLevelWise() ;
   printTree(root);
+
+  printLevelWise(root);
   //to Do is to delete the delete
 }
