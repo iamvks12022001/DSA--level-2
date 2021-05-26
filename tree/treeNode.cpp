@@ -10,6 +10,13 @@ class TreeNode{
     {
         this->data=data;
     }
+
+    ~TreeNode(){
+        for(int i=0;i<this->children.size();i++)
+        {
+            delete this->children[i];  //yaha v destructor call hoga delete hona se phela
+        }
+    }
 };
 
 TreeNode<int>* takeInputLevelWise() {
@@ -114,6 +121,50 @@ void printLevelWise(TreeNode<int>* root)
    }
 }
 
+int noOfleafNode(TreeNode<int>* root)
+{
+  int count=0;
+   if(root->children.size()==0)
+   {
+       count++;
+       return count;
+   }
+
+   for(int i=0;i<root->children.size();i++)
+   {
+       count+=noOfleafNode(root->children[i]);
+   }
+   return count;
+}
+
+void nodeAtDepth(TreeNode<int>* root,int depth)
+{
+    if(depth==0)
+    {
+        cout<<root->data<<" ";
+        return;
+    }
+     for(int i=0;i<root->children.size();i++)
+        {
+           nodeAtDepth(root->children[i],depth-1);
+        }
+
+  return;
+}
+int heightOfTree(TreeNode<int> *root){
+
+    int max=0;
+    for(int i=0;i<root->children.size();i++)
+    {
+        int temp;
+        temp=heightOfTree(root->children[i]);
+        if(temp>max)
+        {
+            max=temp;
+        }
+    }
+    return max+1;
+}
 TreeNode<int>* takeInput(){
     //funtion to  add a node in Tree
 
@@ -133,6 +184,44 @@ TreeNode<int>* takeInput(){
 
 }
 
+void preorder(TreeNode<int>* root)
+{
+    if(root==NULL)
+    {
+        return;
+    }
+
+    cout<<root->data<<" ";
+    for(int i=0;i<root->children.size();i++)
+    {
+        preorder(root->children[i]);
+    }
+}
+
+void postorder(TreeNode<int>* root)
+{
+    if(root==NULL)
+    {
+        return;
+    }
+
+    
+    for(int i=0;i<root->children.size();i++)
+    {
+       postorder(root->children[i]);
+    }
+    cout<<root->data<<" ";
+}
+
+void deleteTree(TreeNode<int>* root)
+{
+   for(int i=0;i<root->children.size();i++)
+   {
+       deleteTree(root->children[i]);
+   }
+   
+   delete root;
+}
 int main()
 {
 
@@ -143,6 +232,20 @@ TreeNode<int>* root = takeInputLevelWise() ;
   cout<<numberOfNodes(root)<<endl;
   cout<<sumOfNodes(root)<<endl;
   cout<<maxOfNodes(root)<<endl;
-
+  cout<<heightOfTree(root)<<endl;
+  nodeAtDepth(root,1);
+  cout<<endl;
+  cout<<noOfleafNode(root)<<endl;
+  preorder(root);
+  cout<<endl;
+  postorder(root);
+  cout<<endl;
   //to Do is to delete the delete
+
+ // deleteTree(root);   one way to deletre the tree
+
+ delete root;//delete throw destructor
+ //concept is when we delete something then usase phela destructor call hoga
+ //so root delete hona se phela destructor call hoga
+ //and destructor fir saare children ko delete kar dega.
 }
