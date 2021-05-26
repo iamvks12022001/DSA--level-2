@@ -222,6 +222,24 @@ void deleteTree(TreeNode<int>* root)
    
    delete root;
 }
+
+bool ContainsX(TreeNode<int>* root,int x){
+    if(root->data==x)
+    {
+        return true;
+    }
+
+    for(int i=0;i<root->children.size();i++)
+    {
+       bool ans= ContainsX(root->children[i],x);
+       if(ans==true)
+       {
+           return true;
+       }
+    }
+
+    return false;
+}
 int main()
 {
 
@@ -240,6 +258,9 @@ TreeNode<int>* root = takeInputLevelWise() ;
   cout<<endl;
   postorder(root);
   cout<<endl;
+
+
+  cout<<ContainsX(root,900)<<endl;
   //to Do is to delete the delete
 
  // deleteTree(root);   one way to deletre the tree
@@ -248,4 +269,7 @@ TreeNode<int>* root = takeInputLevelWise() ;
  //concept is when we delete something then usase phela destructor call hoga
  //so root delete hona se phela destructor call hoga
  //and destructor fir saare children ko delete kar dega.
+
+
+
 }
