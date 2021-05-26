@@ -240,6 +240,24 @@ bool ContainsX(TreeNode<int>* root,int x){
 
     return false;
 }
+
+int noofnodegreaterX(TreeNode<int>* root,int x){
+    int count=0;
+    if(root->data > x)
+    {
+        count++;
+    }
+
+    for(int i=0;i<root->children.size();i++)
+    {
+       
+        count+= noofnodegreaterX(root->children[i],x);
+       
+    }
+
+    return count;
+}
+
 int main()
 {
 
@@ -261,6 +279,7 @@ TreeNode<int>* root = takeInputLevelWise() ;
 
 
   cout<<ContainsX(root,900)<<endl;
+  cout<<noofnodegreaterX(root,35);
   //to Do is to delete the delete
 
  // deleteTree(root);   one way to deletre the tree
