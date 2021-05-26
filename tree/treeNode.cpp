@@ -257,7 +257,36 @@ int noofnodegreaterX(TreeNode<int>* root,int x){
 
     return count;
 }
+pair<int,int> NodeWithMaxChildSum(TreeNode<int>* root)
+{
+    int sum=0;
+    int max=0;
+    sum+=root->data;
+    for(int i=0;i<root->children.size();i++)
+    {
+        sum+=root->children[i]->data;
 
+    }
+    int temp=0;
+    int temp1=root->data;
+    max=sum;
+    pair<int,int> nodevalue;
+    nodevalue=make_pair(sum,root->data);
+    for(int i=0;i<root->children.size();i++)
+    {
+        
+         pair<int,int> nodevalue1=NodeWithMaxChildSum(root->children[i]);
+         temp=nodevalue1.first;
+         temp1=nodevalue1.second;
+        if(max<temp)
+        {
+            max=temp;
+            nodevalue=nodevalue1;
+        }
+     
+    }
+    return nodevalue;
+}
 int main()
 {
 
@@ -279,7 +308,8 @@ TreeNode<int>* root = takeInputLevelWise() ;
 
 
   cout<<ContainsX(root,900)<<endl;
-  cout<<noofnodegreaterX(root,35);
+  cout<<noofnodegreaterX(root,35)<<endl;
+  cout<<NodeWithMaxChildSum(root).second;
   //to Do is to delete the delete
 
  // deleteTree(root);   one way to deletre the tree
@@ -289,6 +319,6 @@ TreeNode<int>* root = takeInputLevelWise() ;
  //so root delete hona se phela destructor call hoga
  //and destructor fir saare children ko delete kar dega.
 
-
+main();
 
 }
