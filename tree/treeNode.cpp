@@ -287,7 +287,26 @@ pair<int,int> NodeWithMaxChildSum(TreeNode<int>* root)
     }
     return nodevalue;
 }
+int nextlarger(TreeNode<int>* root,int value)
+{
+    
+    int min=INT_MAX;
+    if(root->data>value)
+    {
+        min=root->data-value;
+    }
 
+    for(int i=0;i<root->children.size();i++)
+    {
+        int temp=nextlarger(root->children[i],value);
+         if(temp<min)
+         {
+             min=temp;
+         }
+    }
+
+    return min;
+}
 bool structurallyIdentical(TreeNode<int> * root,TreeNode<int> * root1)
 {
     if (root->data!=root1->data || root->children.size()!=root1->children.size())
@@ -332,10 +351,13 @@ TreeNode<int>* root = takeInputLevelWise() ;
   cout<<noofnodegreaterX(root,35)<<endl;
   cout<<NodeWithMaxChildSum(root).second;
 
-TreeNode<int>* root1 = takeInputLevelWise() ;
-cout<<structurallyIdentical(root,root1)<<endl;
+// TreeNode<int>* root1 = takeInputLevelWise() ;
+// cout<<structurallyIdentical(root,root1)<<endl;
 
-
+int nl;
+cout<<"value of n "<<endl;
+cin>>nl;
+cout<<nl+nextlarger(root,nl)<<endl;
 
   //to Do is to delete the delete
 
