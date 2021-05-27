@@ -287,6 +287,27 @@ pair<int,int> NodeWithMaxChildSum(TreeNode<int>* root)
     }
     return nodevalue;
 }
+
+bool structurallyIdentical(TreeNode<int> * root,TreeNode<int> * root1)
+{
+    if (root->data!=root1->data || root->children.size()!=root1->children.size())
+    {
+        return false;
+    }
+   
+    
+
+    for(int i=0;i<root->children.size();i++)
+    {
+        bool temp=structurallyIdentical(root->children[i],root1->children[i]);
+        if(temp==false)
+        {
+           return false;
+        }
+    }
+
+    return true;
+}
 int main()
 {
 
@@ -310,6 +331,12 @@ TreeNode<int>* root = takeInputLevelWise() ;
   cout<<ContainsX(root,900)<<endl;
   cout<<noofnodegreaterX(root,35)<<endl;
   cout<<NodeWithMaxChildSum(root).second;
+
+TreeNode<int>* root1 = takeInputLevelWise() ;
+cout<<structurallyIdentical(root,root1)<<endl;
+
+
+
   //to Do is to delete the delete
 
  // deleteTree(root);   one way to deletre the tree
