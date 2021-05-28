@@ -327,18 +327,7 @@ bool structurallyIdentical(TreeNode<int> * root,TreeNode<int> * root1)
 
     return true;
 }
-void findSecondMin(TreeNode<int> *root,int &first,int &second)
-{
-   if(root->data>first)
-   {
-       first=root->data;
-   }
-   for(int i=0;i<root->children.size();i++)
-   {
-       
-   }
 
-}
 
 void replacewithdepth(TreeNode<int>* root,int depth)
 {
@@ -350,6 +339,55 @@ void replacewithdepth(TreeNode<int>* root,int depth)
     }
 
 }
+pair<int,int> findSecondMin(TreeNode<int>*root,int first,int second)
+{
+    if(first>root->data)
+       {
+           if(first!=second){
+           second=(second>=root->data)?second:root->data;
+           }else{
+               second=(second>=root->data)?root->data:second;
+           }
+                  
+       }
+       else{
+           if(first==root->data)
+           {
+            
+           }else{
+               second=first;
+               first=root->data;  
+             
+           }
+       }
+
+
+    for(int i=0;i<root->children.size();i++)
+    {
+        pair<int,int> p1;
+       p1=findSecondMin(root->children[i],first,second);
+       first=p1.first;
+       second=p1.second;
+       
+    }
+    return make_pair(first,second);
+}
+
+int secondlarger(TreeNode<int>* root)
+{
+    int first=INT_MIN;
+    int second=INT_MIN;
+    pair<int,int> p1=make_pair(first,second);
+    if(root!=NULL){
+     p1=findSecondMin(root,first,second);
+    }
+    if(p1.second==INT_MIN)
+    {
+        return NULL;
+    }
+    return p1.second;
+}
+
 int main()
 {
 
@@ -382,11 +420,12 @@ int nl;
 // cin>>nl;
 // cout<<nl+nextlarger(root,nl)<<endl;
 
-//cout<<secondlarger(root)<<endl;
 
-  replacewithdepth(root,0);
-  printLevelWise(root);
 
+//   replacewithdepth(root,0);
+//   printLevelWise(root);
+cout<<endl;
+cout<<secondlarger(root)<<endl;
   //to Do is to delete the delete
 
  // deleteTree(root);   one way to deletre the tree
