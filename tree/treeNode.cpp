@@ -327,6 +327,29 @@ bool structurallyIdentical(TreeNode<int> * root,TreeNode<int> * root1)
 
     return true;
 }
+void findSecondMin(TreeNode<int> *root,int &first,int &second)
+{
+   if(root->data>first)
+   {
+       first=root->data;
+   }
+   for(int i=0;i<root->children.size();i++)
+   {
+       
+   }
+
+}
+
+void replacewithdepth(TreeNode<int>* root,int depth)
+{
+
+    root->data=depth;
+    for(int i=0;i<root->children.size();i++)
+    {
+        replacewithdepth(root->children[i],depth+1);
+    }
+
+}
 int main()
 {
 
@@ -355,9 +378,14 @@ TreeNode<int>* root = takeInputLevelWise() ;
 // cout<<structurallyIdentical(root,root1)<<endl;
 
 int nl;
-cout<<"value of n "<<endl;
-cin>>nl;
-cout<<nl+nextlarger(root,nl)<<endl;
+// cout<<"value of n "<<endl;
+// cin>>nl;
+// cout<<nl+nextlarger(root,nl)<<endl;
+
+//cout<<secondlarger(root)<<endl;
+
+  replacewithdepth(root,0);
+  printLevelWise(root);
 
   //to Do is to delete the delete
 
