@@ -106,6 +106,34 @@ BinaryTreeNode<int>* takeInputLevelWise()
     }
 return root;
 }
+
+void printLevelWise(BinaryTreeNode<int>* root)
+{
+    if(root==NULL)
+    {
+        return;
+    }
+    
+    queue< BinaryTreeNode<int>*> q;
+    q.push(root);
+    while(!q.empty())
+    {
+        BinaryTreeNode<int>*front=q.front();
+        q.pop();
+        cout<<front->data<<": ";
+        if(front->left!=NULL){
+        cout<<"L "<<front->left->data<<", ";
+        q.push(front->left);
+        }
+        if(front->right!=NULL){
+        cout<<"R "<<front->right->data<<", ";
+         q.push(front->right);
+        }
+
+        cout<<endl;
+    }
+   
+}
 int main()
 {
     // BinaryTreeNode<int>* root=new BinaryTreeNode<int>(1);
@@ -116,8 +144,10 @@ int main()
 
    // BinaryTreeNode<int>* root=takeInput();
     BinaryTreeNode<int>* root=takeInputLevelWise();
-    printTree(root);
-
+   // printTree(root);
+   printLevelWise(root);
 
     delete root;// to delete the node recursively
+
+    main();
 }
