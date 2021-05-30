@@ -62,6 +62,50 @@ BinaryTreeNode<int>* takeInput(){  //Input is taken in postOrder
   
 return root;
 }
+
+BinaryTreeNode<int>* takeInputLevelWise()
+{
+    int rootData;
+    cout<<"Enter root Data"<<endl;
+    cin>>rootData;
+    if(rootData==-1)
+     {
+      return NULL;
+     }
+    BinaryTreeNode<int>* root=new BinaryTreeNode<int>(rootData);
+    queue< BinaryTreeNode<int>*> q;
+    q.push(root);
+    while(!q.empty())
+    {
+         BinaryTreeNode<int>*front=q.front();
+         q.pop();
+        cout<<"Enter left child of "<<front->data<<endl;
+        int leftChildData;
+        cin>>leftChildData;
+        if(leftChildData==-1)
+        {
+            front->left=NULL;
+        }else{
+            front->left=new BinaryTreeNode<int>(leftChildData);
+            q.push(front->left);
+        }
+
+        cout<<"Enter right child of "<<front->data<<endl;
+        int rightChildData;
+        cin>>rightChildData;
+        if(rightChildData==-1)
+        {
+            front->right=NULL;
+        }else{
+            front->right=new BinaryTreeNode<int>(rightChildData);
+            q.push(front->right);
+        }
+
+
+
+    }
+return root;
+}
 int main()
 {
     // BinaryTreeNode<int>* root=new BinaryTreeNode<int>(1);
@@ -70,8 +114,8 @@ int main()
     // root->left=node1;
     // root->right=node2;
 
-    BinaryTreeNode<int>* root=takeInput();
-
+   // BinaryTreeNode<int>* root=takeInput();
+    BinaryTreeNode<int>* root=takeInputLevelWise();
     printTree(root);
 
 
