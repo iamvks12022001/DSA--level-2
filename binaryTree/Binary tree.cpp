@@ -1,3 +1,6 @@
+#include<bits/stdc++.h>
+using namespace std;
+
 template<typename T>
 class BinaryTreeNode {
     public:
@@ -7,7 +10,7 @@ class BinaryTreeNode {
 
      BinaryTreeNode(T data){
          this->data=data;
-         left=NULL:
+         left=NULL;
          right=NULL;
 
      }
@@ -20,6 +23,29 @@ class BinaryTreeNode {
 
 };
 
+void printTree(BinaryTreeNode<int> *root)
+{
+    if(root==NULL)
+    {
+        return ;
+    }
+
+    cout<<root->data<<": ";
+    if(root->left!=NULL)
+    {
+        cout<<"L "<<root->left->data<<", ";
+    }
+    if(root->right!=NULL)
+    {
+        cout<<"R "<<root->right->data<<", ";
+    }
+
+    cout<<endl;
+  
+       printTree(root->left);   
+       printTree(root->right);
+  
+}
 int main()
 {
     BinaryTreeNode<int>* root=new BinaryTreeNode<int>(1);
@@ -27,4 +53,9 @@ int main()
     BinaryTreeNode<int>* node2=new BinaryTreeNode<int>(3);
     root->left=node1;
     root->right=node2;
+
+    printTree(root);
+
+
+    delete root;// to delete the node recursively
 }
