@@ -46,13 +46,31 @@ void printTree(BinaryTreeNode<int> *root)
        printTree(root->right);
   
 }
+BinaryTreeNode<int>* takeInput(){  //Input is taken in postOrder 
+
+  int rootData;
+  cout<<"Enter root Data"<<endl;
+  cin>>rootData;
+  if(rootData==-1)
+  {
+      return NULL;
+  }
+
+ BinaryTreeNode<int>* root=new BinaryTreeNode<int>(rootData);
+ root->left=takeInput();
+ root->right=takeInput();
+  
+return root;
+}
 int main()
 {
-    BinaryTreeNode<int>* root=new BinaryTreeNode<int>(1);
-    BinaryTreeNode<int>* node1=new BinaryTreeNode<int>(2);
-    BinaryTreeNode<int>* node2=new BinaryTreeNode<int>(3);
-    root->left=node1;
-    root->right=node2;
+    // BinaryTreeNode<int>* root=new BinaryTreeNode<int>(1);
+    // BinaryTreeNode<int>* node1=new BinaryTreeNode<int>(2);
+    // BinaryTreeNode<int>* node2=new BinaryTreeNode<int>(3);
+    // root->left=node1;
+    // root->right=node2;
+
+    BinaryTreeNode<int>* root=takeInput();
 
     printTree(root);
 
