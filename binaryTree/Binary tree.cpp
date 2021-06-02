@@ -154,6 +154,34 @@ int noOfNode(BinaryTreeNode<int>* root)
 
     return count+1;
 }
+
+bool findAnode(BinaryTreeNode<int>* root,int Data)
+{
+    if(root==NULL)
+    {
+        return false;
+    }
+    if(root->data==Data)
+    {
+        return true;
+    }
+    return(findAnode(root->left,Data)||findAnode(root->right,Data));
+
+}
+ int heightOfTree(BinaryTreeNode<int>* node){
+        // code here 
+        int max=0;
+    
+        int temp1=0;
+        if(node->left!=NULL)
+        temp1=heightOfTree(node->left);
+        int temp2=0;
+        if(node->right!=NULL)
+        temp2=heightOfTree(node->right);
+        max=(temp1>temp2)?temp1:temp2;
+    
+    return max+1;
+    }
 int main()
 {
     // BinaryTreeNode<int>* root=new BinaryTreeNode<int>(1);
@@ -167,7 +195,11 @@ int main()
    // printTree(root);
    printLevelWise(root);
    cout<<noOfNode(root)<<endl;
-    delete root;// to delete the node recursively
+   int Data;
+  // cin>>Data;
+  // cout<<findAnode(root,Data)<<endl;
+   cout<<heightOfTree(root)<<endl;
+   delete root;// to delete the node recursively
 
     main();
 }
