@@ -182,6 +182,24 @@ bool findAnode(BinaryTreeNode<int>* root,int Data)
     
     return max+1;
     }
+
+   
+
+void mirrorTree(BinaryTreeNode<int> *root) {
+    // Write your code here.
+    if(root==NULL)
+    {
+        return;
+    }
+    
+    BinaryTreeNode<int> *temp=root->left;
+    root->left=root->right;
+    root->right=temp;
+    mirrorTree(root->left);
+    mirrorTree(root->right);
+    
+}
+
 int main()
 {
     // BinaryTreeNode<int>* root=new BinaryTreeNode<int>(1);
@@ -199,6 +217,8 @@ int main()
   // cin>>Data;
   // cout<<findAnode(root,Data)<<endl;
    cout<<heightOfTree(root)<<endl;
+   mirrorTree(root);
+   printLevelWise(root);
    delete root;// to delete the node recursively
 
     main();
