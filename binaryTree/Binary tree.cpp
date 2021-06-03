@@ -199,7 +199,17 @@ void mirrorTree(BinaryTreeNode<int> *root) {
     mirrorTree(root->right);
     
 }
+void inorder(BinaryTreeNode<int>* root)
+{
+    if(root==NULL)
+    {
+        return;
+    }
+    inorder(root->left);
+    cout<<root->data<<" ";
+    inorder(root->right);
 
+}
 int main()
 {
     // BinaryTreeNode<int>* root=new BinaryTreeNode<int>(1);
@@ -217,9 +227,13 @@ int main()
   // cin>>Data;
   // cout<<findAnode(root,Data)<<endl;
    cout<<heightOfTree(root)<<endl;
-   mirrorTree(root);
+ //  mirrorTree(root);
    printLevelWise(root);
+   inorder(root);
    delete root;// to delete the node recursively
 
     main();
 }
+
+
+//1 2 3 4 5 6 7 -1 -1 -1 -1 8 9 -1 -1 -1 -1 -1 -1
