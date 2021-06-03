@@ -210,6 +210,67 @@ void inorder(BinaryTreeNode<int>* root)
     inorder(root->right);
 
 }
+
+void preorder(BinaryTreeNode<int>* root)
+{
+    if(root==NULL)
+    {
+        return;
+    }
+    cout<<root->data<<" ";
+    preorder(root->left); 
+    preorder(root->right);
+
+}
+
+void postorder(BinaryTreeNode<int>* root)
+{
+    if(root==NULL)
+    {
+        return;
+    }
+    postorder(root->left); 
+    postorder(root->right);
+    cout<<root->data<<" ";
+    
+
+}
+BinaryTreeNode<int>* buildTreefrom_In_PreOrder(vector<int> in,vector<int> pre, int n)
+    {
+        // Code here
+        if(n==0)
+        {
+            return NULL;
+        }
+        BinaryTreeNode<int>*root=new BinaryTreeNode<int>(pre.front());
+        //search in inorder to get length from left of root;
+        int length=0;
+        vector<int> in_updated_left;
+        vector<int>pre_updated_left;
+        for(int i=0;i<n;i++)
+        {
+            if(in[i]==pre.front())
+            {
+                break;
+            }
+            length++;
+            in_updated_left.push_back(in[i]);          
+            in.erase( in.begin());
+        }
+         in.erase( in.begin());
+         pre.erase( pre.begin());
+         for(int i=1;i<=length;i++)
+         {
+            pre_updated_left.push_back(pre[i]);
+            
+            pre.erase( pre.begin());
+         }
+        root->left=buildTreefrom_In_PreOrder(in_updated_left,pre_updated_left,length);
+        root->right=buildTreefrom_In_PreOrder(in,pre,n-length-1);
+
+        return root;
+    }
+
 int main()
 {
     // BinaryTreeNode<int>* root=new BinaryTreeNode<int>(1);
@@ -230,6 +291,34 @@ int main()
  //  mirrorTree(root);
    printLevelWise(root);
    inorder(root);
+   cout<<endl;
+   postorder(root);
+   cout<<endl;
+   preorder(root);
+   cout<<endl;
+
+   vector<int>in;
+   vector<int>pre;
+   int n;
+   cout<<"give length of traversal"<<endl;
+   cin>>n;
+   cout<<"give inorder traversal"<<endl;
+   for(int i=0;i<n;i++)
+   {
+       int data;
+       cin>>data;
+       in.push_back(data);
+   }
+
+   cout<<"give Preorder traversal"<<endl;
+   for(int i=0;i<n;i++)
+   {
+       int data;
+       cin>>data;
+       pre.push_back(data);
+   }
+   BinaryTreeNode<int>* root1=buildTreefrom_In_PreOrder(in,pre,n);
+   printLevelWise(root1);
    delete root;// to delete the node recursively
 
     main();
