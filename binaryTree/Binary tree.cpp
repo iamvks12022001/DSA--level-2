@@ -404,6 +404,23 @@ pair<int, int> getMinAndMax(BinaryTreeNode<int> *root) {
     
 }
 
+ int sumBT(BinaryTreeNode<int>* root)
+{
+    // Code here
+     long int sum=root->data;
+    
+    if(root->left!=NULL)
+    {
+       sum+=sumBT(root->left);
+    }
+       
+    if(root->right!=NULL){
+        sum+=sumBT(root->right);
+    }
+    return sum;
+    
+}
+
 int main()
 {
     // BinaryTreeNode<int>* root=new BinaryTreeNode<int>(1);
@@ -472,6 +489,8 @@ int main()
 
 
    cout<<"MIN :"<< getMinAndMax(root).first<<"MAX :"<<getMinAndMax(root).second<<endl;
+
+   cout<<"SUM is "<<sumBT(root)<<endl;
    delete root;// to delete the node recursively
 
 
