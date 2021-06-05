@@ -379,6 +379,31 @@ pair<int, int> heightDiameter(BinaryTreeNode<int>* root) {
 	return p;
 }
 
+pair<int, int> findMINMAX(BinaryTreeNode<int> *root,pair<int, int>p)
+{
+    if(root==NULL)
+    {
+        return p;
+    }
+    p.first=root->data;
+    p.second=root->data;
+     pair<int,int> p1;
+     pair<int,int> p2;
+     p1=findMINMAX(root->left,p);
+     p2=findMINMAX(root->right,p);
+     p.first=min(p.first,min(p2.first,p1.first));
+     p.second=max(p.second,max(p2.second,p1.second));
+    
+    return p;
+}
+pair<int, int> getMinAndMax(BinaryTreeNode<int> *root) {
+	// Write your code here
+    
+    pair<int,int> p=make_pair(INT_MAX,INT_MIN);
+    return findMINMAX(root,p);
+    
+}
+
 int main()
 {
     // BinaryTreeNode<int>* root=new BinaryTreeNode<int>(1);
@@ -432,19 +457,21 @@ int main()
  //   int in[] = {4,2,5,1,8,6,9,3,7};
 	// int pre[] = {1,2,4,5,3,6,8,9,7};
 	// BinaryTreeNode<int>* root1 = buildTree(in, pre, 9);
-    vector<int> in1 = {8,4,5,2,6,7,3,1};
-	 vector<int> post = {4,8,2,5,1,6,3,7};
-	BinaryTreeNode<int>* root3 = getTreeFromPostorderAndInorder(in1, post);
-	printTree(root3);
+ //    vector<int> in1 = {8,4,5,2,6,7,3,1};
+	//  vector<int> post = {4,8,2,5,1,6,3,7};
+	// BinaryTreeNode<int>* root3 = getTreeFromPostorderAndInorder(in1, post);
+	// printTree(root3);
 
-    cout<<diameter(root);//O(n*height of tree) appraoch
+ //    cout<<diameter(root);//O(n*height of tree) appraoch
 
-   pair<int, int> p = heightDiameter(root);
-	cout << "Height: " << p.first << endl;
-	cout << "Diameter: " << p.second << endl;
+ //   pair<int, int> p = heightDiameter(root);
+	// cout << "Height: " << p.first << endl;
+	// cout << "Diameter: " << p.second << endl;
 
     //O(n approach)
-    
+
+
+   cout<<"MIN :"<< getMinAndMax(root).first<<"MAX :"<<getMinAndMax(root).second<<endl;
    delete root;// to delete the node recursively
 
 
