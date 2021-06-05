@@ -302,6 +302,83 @@ BinaryTreeNode<int>* buildTreeHelper(int* in, int* pre, int inS, int inE, int pr
 BinaryTreeNode<int>* buildTree(int* in, int* pre, int size) {
 	return buildTreeHelper(in, pre, 0, size - 1, 0, size - 1);
 }
+
+BinaryTreeNode<int>* buildTreeHelper(vector<int>& postOrder, int postStart, int postEnd, vector<int>& inOrder,
+		int inStart, int inEnd) {
+	if (postStart > postEnd || inStart > inEnd) {
+		return NULL;
+	}
+
+	int rootVal = postOrder[postEnd];
+	BinaryTreeNode<int>* root = new BinaryTreeNode<int>(rootVal);
+
+	// Find parent element index from inOrder array.
+	int k = 0;
+	for (int i = inStart; i <= inEnd; i++) {
+		if (rootVal == inOrder[i]) {
+			k = i;
+			break;
+		}
+	}
+
+	root -> left = buildTreeHelper(postOrder, postStart, postStart + k - inStart - 1, inOrder, inStart, k - 1);
+	root -> right = buildTreeHelper(postOrder, postStart + k - inStart, postEnd - 1, inOrder, k + 1, inEnd);
+
+	return root;
+}
+
+BinaryTreeNode<int>* getTreeFromPostorderAndInorder(vector<int>& postOrder, vector<int>& inOrder) {
+	int n = postOrder.size();
+
+	int postStart = 0;
+	int postEnd = n - 1;
+	int inStart = 0;
+	int inEnd = n - 1;
+
+	return buildTreeHelper(postOrder, postStart, postEnd, inOrder, inStart, inEnd);
+}
+int height(BinaryTreeNode<int>* root)
+{
+    if(root==NULL)
+    {
+        return 0;
+    }
+    return 1+max(height(root->left),height(root->right));
+}
+int diameter(BinaryTreeNode<int>* root)
+{
+    if(root==NULL)
+    {
+        return 0;
+    }
+    int op1=heightOfTree(root->left)+heightOfTree(root->right);
+    int op2=diameter(root->left);
+    int op3=diameter(root->right);
+    return max(op1,max(op2,op3));
+}
+
+pair<int, int> heightDiameter(BinaryTreeNode<int>* root) {
+	if (root == NULL) {
+		pair<int, int> p;
+		p.first = 0;
+		p.second = 0;
+		return p;
+	}
+	pair<int, int> leftAns = heightDiameter(root->left);
+	pair<int,int> rightAns = heightDiameter(root->right);
+	int ld = leftAns.second;
+	int lh = leftAns.first;
+	int rd = rightAns.second;
+	int rh = rightAns.first;
+
+	int height = 1 + max(lh, rh);
+	int diameter = max(lh + rh, max(ld, rd));
+	pair<int, int> p;
+	p.first = height;
+	p.second = diameter;
+	return p;
+}
+
 int main()
 {
     // BinaryTreeNode<int>* root=new BinaryTreeNode<int>(1);
@@ -328,34 +405,49 @@ int main()
    preorder(root);
    cout<<endl;
 
-   vector<int>in;
-   vector<int>pre;
-   int n;
-   cout<<"give length of traversal"<<endl;
-   cin>>n;
-   cout<<"give inorder traversal"<<endl;
-   for(int i=0;i<n;i++)
-   {
-       int data;
-       cin>>data;
-       in.push_back(data);
-   }
 
-   cout<<"give Preorder traversal"<<endl;
-   for(int i=0;i<n;i++)
-   {
-       int data;
-       cin>>data;
-       pre.push_back(data);
-   }
-   BinaryTreeNode<int>* root1=buildTreefrom_In_PreOrder(in,pre,n);
-   printLevelWise(root1);
+// vector<int>in;
+   // vector<int>pre;
+   // int n;
+   // cout<<"give length of traversal"<<endl;
+   // cin>>n;
+   // cout<<"give inorder traversal"<<endl;
+   // for(int i=0;i<n;i++)
+   // {
+   //     int data;
+   //     cin>>data;
+   //     in.push_back(data);
+   // }
 
-   int in[] = {4,2,5,1,8,6,9,3,7};
-	int pre[] = {1,2,4,5,3,6,8,9,7};
-	BinaryTreeNode<int>* root = buildTree(in, pre, 9);
-	printTree(root);
+   // cout<<"give Preorder traversal"<<endl;
+   // for(int i=0;i<n;i++)
+   // {
+   //     int data;
+   //     cin>>data;
+   //     pre.push_back(data);
+   // }
+ //   BinaryTreeNode<int>* root1=buildTreefrom_In_PreOrder(in,pre,n);
+ //   printLevelWise(root1);
+
+ //   int in[] = {4,2,5,1,8,6,9,3,7};
+	// int pre[] = {1,2,4,5,3,6,8,9,7};
+	// BinaryTreeNode<int>* root1 = buildTree(in, pre, 9);
+    vector<int> in1 = {8,4,5,2,6,7,3,1};
+	 vector<int> post = {4,8,2,5,1,6,3,7};
+	BinaryTreeNode<int>* root3 = getTreeFromPostorderAndInorder(in1, post);
+	printTree(root3);
+
+    cout<<diameter(root);//O(n*height of tree) appraoch
+
+   pair<int, int> p = heightDiameter(root);
+	cout << "Height: " << p.first << endl;
+	cout << "Diameter: " << p.second << endl;
+
+    //O(n approach)
+    
    delete root;// to delete the node recursively
+
+
 
     main();
 }
