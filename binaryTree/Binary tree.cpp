@@ -452,6 +452,42 @@ bool isBalanced_helper(BinaryTreeNode<int>* root)
 {
     return isbalanced(root).second;
 }
+
+void levelWisetraversal(BinaryTreeNode<int>* root)
+{
+    if(root==NULL)
+    {
+        return;
+    }
+   
+    queue<BinaryTreeNode<int>*> q;
+    q.push(root);
+    q.push(NULL);
+    while(!q.empty())
+    {
+       BinaryTreeNode<int>* node=q.front();
+       q.pop();
+       if(node==NULL)
+       {
+           cout<<endl;
+           if(!q.empty()){
+           q.push(NULL);
+           }
+       }else{
+
+        cout<<node->data<<" ";
+        
+        if(node->left!=NULL)
+        {
+            q.push(node->left);
+        }
+        if(node->right!=NULL)
+        {
+            q.push(node->right);
+        }
+     }
+    }
+}
 int main()
 {
     // BinaryTreeNode<int>* root=new BinaryTreeNode<int>(1);
@@ -524,6 +560,8 @@ int main()
    cout<<"SUM is "<<sumBT(root)<<endl;
    
   cout<<isBalanced_helper(root)<<endl;
+
+  levelWisetraversal(root);
 delete root;// to delete the node recursively
 
     main();
