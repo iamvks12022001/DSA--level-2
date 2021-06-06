@@ -420,7 +420,24 @@ pair<int, int> getMinAndMax(BinaryTreeNode<int> *root) {
     return sum;
     
 }
+bool isbalanced(BinaryTreeNode<int>* root)
+{
+    if(root==NULL)
+    {
+        return true;
+    }
 
+    int h_left=height(root->left);
+    int h_right=height(root->right);
+    if(abs(h_left-h_right)>1)
+    {
+        return false;
+    }
+   bool left=isbalanced(root->left);
+   bool right=isbalanced(root->right);
+
+   return (left && right);
+}
 int main()
 {
     // BinaryTreeNode<int>* root=new BinaryTreeNode<int>(1);
@@ -491,9 +508,9 @@ int main()
    cout<<"MIN :"<< getMinAndMax(root).first<<"MAX :"<<getMinAndMax(root).second<<endl;
 
    cout<<"SUM is "<<sumBT(root)<<endl;
-   delete root;// to delete the node recursively
-
-
+   
+  cout<<isbalanced(root)<<endl;
+delete root;// to delete the node recursively
 
     main();
 }
