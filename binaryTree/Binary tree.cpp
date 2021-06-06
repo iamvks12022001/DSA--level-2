@@ -488,6 +488,25 @@ void levelWisetraversal(BinaryTreeNode<int>* root)
      }
     }
 }
+BinaryTreeNode<int>* removeleaf(BinaryTreeNode<int>* root)
+{
+
+    if(root->left==NULL && root->right==NULL)
+    {
+        delete root;
+        return NULL;
+    }
+    
+    if(root->left!=NULL){
+    root->left=removeleaf(root->left);
+    }
+    
+    if(root->right!=NULL){
+    root->right=removeleaf(root->right);
+    }
+
+    return root;
+}
 int main()
 {
     // BinaryTreeNode<int>* root=new BinaryTreeNode<int>(1);
@@ -561,6 +580,9 @@ int main()
    
   cout<<isBalanced_helper(root)<<endl;
 
+  levelWisetraversal(root);
+ cout<<endl;
+  root=removeleaf(root);
   levelWisetraversal(root);
 delete root;// to delete the node recursively
 
