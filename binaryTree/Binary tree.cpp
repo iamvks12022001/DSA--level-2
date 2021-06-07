@@ -561,6 +561,35 @@ vector<int> zigzagTreeTraversal(BinaryTreeNode<int> *root)
 
         return v1;
 }
+vector<int> siblingNodes(BinaryTreeNode<int> *root)
+{
+    vector<int> v;
+    if(root==NULL)
+    {
+        return v;
+    }
+    if(root->left==NULL && root->right!=NULL)
+    {
+       v.push_back(root->right->data);
+    }
+    if(root->right==NULL && root->left!=NULL)
+    {
+      v.push_back(root->left->data);
+    }
+
+    if(root->left!=NULL)
+    {
+        vector<int> v1=siblingNodes(root->left);
+        v.insert(v.end(),v1.begin(),v1.end());
+    }
+    if(root->right!=NULL)
+    {
+        vector<int> v1=siblingNodes(root->right);
+        v.insert(v.end(),v1.begin(),v1.end());
+    }
+    sort(v.begin(), v.end());
+    return v;
+}
 int main()
 {
     // BinaryTreeNode<int>* root=new BinaryTreeNode<int>(1);
@@ -645,6 +674,12 @@ int main()
       cout<<v[i]<<" ";
   }
   cout<<endl;
+
+  vector<int> v1=siblingNodes(root);
+  for(int i=0;i<v1.size();i++)
+  {
+      cout<<v1[i]<<" ";
+  }
 delete root;// to delete the node recursively
 
     main();
