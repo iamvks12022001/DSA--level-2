@@ -507,6 +507,60 @@ BinaryTreeNode<int>* removeleaf(BinaryTreeNode<int>* root)
 
     return root;
 }
+
+vector<int> zigzagTreeTraversal(BinaryTreeNode<int> *root)
+{
+    //    Write your code here.
+   
+      vector<int> v;
+      vector<int> v1;
+        if(root==NULL)
+        {
+            return v;
+        }
+        queue<BinaryTreeNode<int>* > q;
+        q.push(root);
+        q.push(NULL);
+      
+        int count=1;
+        while(!q.empty())
+        {
+            BinaryTreeNode<int> * r1=q.front();
+            q.pop();
+            if(r1==NULL)
+            {
+               
+                v1.insert(v1.end(),v.begin(),v.end());
+                v.clear();
+                count++;
+                if(!q.empty())
+                {
+                    q.push(NULL);
+                }
+            }
+            else{
+                    
+                    if(count%2==0)
+                    { v.insert(v.begin(),r1->data);
+                     
+                     }else{
+                           v.push_back(r1->data);
+                    }
+                      
+                    if(r1->left!=NULL)
+                    {
+                        q.push(r1->left);
+                    }
+                    if(r1->right!=NULL)
+                    {
+                        q.push(r1->right);
+                    }
+                
+                }
+        }
+
+        return v1;
+}
 int main()
 {
     // BinaryTreeNode<int>* root=new BinaryTreeNode<int>(1);
@@ -578,12 +632,19 @@ int main()
 
    cout<<"SUM is "<<sumBT(root)<<endl;
    
-  cout<<isBalanced_helper(root)<<endl;
+ //  cout<<isBalanced_helper(root)<<endl;
 
-  levelWisetraversal(root);
- cout<<endl;
-  root=removeleaf(root);
-  levelWisetraversal(root);
+ //  levelWisetraversal(root);
+ // cout<<endl;
+ //  root=removeleaf(root);
+ //  levelWisetraversal(root);
+  cout<<endl;
+  vector<int> v=zigzagTreeTraversal(root);
+  for(int i=0;i<v.size();i++)
+  {
+      cout<<v[i]<<" ";
+  }
+  cout<<endl;
 delete root;// to delete the node recursively
 
     main();
