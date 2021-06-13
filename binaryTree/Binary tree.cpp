@@ -590,6 +590,21 @@ vector<int> siblingNodes(BinaryTreeNode<int> *root)
     sort(v.begin(), v.end());
     return v;
 }
+
+void CreateDublicate_InsertLeft(BinaryTreeNode<int>* root)
+{
+    if(root==NULL)
+    {
+        return ;
+    }
+
+    BinaryTreeNode<int>* newnode=new BinaryTreeNode<int>(root->data);
+    BinaryTreeNode<int>*prevnode=root->left;
+    root->left=newnode;
+    newnode->left=prevnode;
+    CreateDublicate_InsertLeft(prevnode);
+    CreateDublicate_InsertLeft(root->right);
+}
 int main()
 {
     // BinaryTreeNode<int>* root=new BinaryTreeNode<int>(1);
@@ -667,19 +682,24 @@ int main()
  // cout<<endl;
  //  root=removeleaf(root);
  //  levelWisetraversal(root);
-  cout<<endl;
-  vector<int> v=zigzagTreeTraversal(root);
-  for(int i=0;i<v.size();i++)
-  {
-      cout<<v[i]<<" ";
-  }
-  cout<<endl;
+  // cout<<endl;
+  // vector<int> v=zigzagTreeTraversal(root);
+  // for(int i=0;i<v.size();i++)
+  // {
+  //     cout<<v[i]<<" ";
+  // }
+  // cout<<endl;
 
-  vector<int> v1=siblingNodes(root);
-  for(int i=0;i<v1.size();i++)
-  {
-      cout<<v1[i]<<" ";
-  }
+  // vector<int> v1=siblingNodes(root);
+  // for(int i=0;i<v1.size();i++)
+  // {
+  //     cout<<v1[i]<<" ";
+  // }
+levelWisetraversal(root);
+cout<<"----"<<endl;
+  CreateDublicate_InsertLeft(root);
+
+  levelWisetraversal(root);
 delete root;// to delete the node recursively
 
     main();
