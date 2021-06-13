@@ -648,6 +648,40 @@ void pair_sum(BinaryTreeNode<int> * root,int s)
 
 }
 
+
+int lowestCommonAncestor(BinaryTreeNode<int> *root, int x, int y)
+{
+	//    Write your code here
+    int ans=-1;
+    if(x==root->data || y==root->data)
+    {
+        ans=root->data;
+        return ans;
+    }
+    
+    int left=-1;
+    int right=-1;
+    if(root->left!=NULL)
+    {
+        left=lowestCommonAncestor(root->left,x,y);
+    }
+    if(root->right!=NULL)
+    {
+        right=lowestCommonAncestor(root->right,x,y);
+    }
+    
+    if(left==-1 && right==-1)
+    {
+        return -1;
+    }
+    if(left!=-1 && right!=-1)
+    {
+        return root->data;
+    }
+    
+    return (left==-1)?right:left;
+}
+
 int main()
 {
     // BinaryTreeNode<int>* root=new BinaryTreeNode<int>(1);
@@ -743,9 +777,13 @@ int main()
 //   CreateDublicate_InsertLeft(root);
 
 //   levelWisetraversal(root);
-int sum;
-cin>>sum;
-  pair_sum(root,sum);
+// int sum;
+// cin>>sum;
+//   pair_sum(root,sum);
+int x,y;
+cin>>x>>y;
+cout<<"give x and y"<<endl;
+cout<<lowestCommonAncestor(root,x,y)<<endl;
 delete root;// to delete the node recursively
 
     main();
