@@ -605,6 +605,49 @@ void CreateDublicate_InsertLeft(BinaryTreeNode<int>* root)
     CreateDublicate_InsertLeft(prevnode);
     CreateDublicate_InsertLeft(root->right);
 }
+void AllNodein_Array(BinaryTreeNode<int>*root,vector<int>*v)
+{
+   if(root==NULL)
+   {
+       return;
+   }
+   v->push_back(root->data);
+   AllNodein_Array(root->left,v);
+   AllNodein_Array(root->right,v);
+
+}
+void pair_sum(BinaryTreeNode<int> * root,int s)
+{
+    vector<int> vec;
+    AllNodein_Array(root,&vec);
+    // for(int i=0;i<vec.size();i++)
+    // {
+    //     cout<<vec[i]<<" ";
+    // }
+    sort(vec.begin(), vec.end());
+    int i=0;
+    int j=vec.size()-1;
+
+    while(i<j)
+    {
+        if(vec[i]+vec[j]>s)
+        {
+             j--;
+        }else{
+            if(vec[i]+vec[j]==s)
+            {
+                cout<<vec[i]<<" "<<vec[j]<<endl;
+                i++;
+                j--;
+            }else{
+                   
+                   i++;
+            }
+        }
+    }
+
+}
+
 int main()
 {
     // BinaryTreeNode<int>* root=new BinaryTreeNode<int>(1);
@@ -616,20 +659,20 @@ int main()
    // BinaryTreeNode<int>* root=takeInput();
     BinaryTreeNode<int>* root=takeInputLevelWise();
    // printTree(root);
-   printLevelWise(root);
-   cout<<noOfNode(root)<<endl;
+//    printLevelWise(root);
+//    cout<<noOfNode(root)<<endl;
    int Data;
   // cin>>Data;
   // cout<<findAnode(root,Data)<<endl;
-   cout<<heightOfTree(root)<<endl;
+//    cout<<heightOfTree(root)<<endl;
  //  mirrorTree(root);
-   printLevelWise(root);
-   inorder(root);
-   cout<<endl;
-   postorder(root);
-   cout<<endl;
-   preorder(root);
-   cout<<endl;
+//    printLevelWise(root);
+//    inorder(root);
+//    cout<<endl;
+//    postorder(root);
+//    cout<<endl;
+//    preorder(root);
+//    cout<<endl;
 
 
 // vector<int>in;
@@ -672,9 +715,9 @@ int main()
     //O(n approach)
 
 
-   cout<<"MIN :"<< getMinAndMax(root).first<<"MAX :"<<getMinAndMax(root).second<<endl;
+//    cout<<"MIN :"<< getMinAndMax(root).first<<"MAX :"<<getMinAndMax(root).second<<endl;
 
-   cout<<"SUM is "<<sumBT(root)<<endl;
+//    cout<<"SUM is "<<sumBT(root)<<endl;
    
  //  cout<<isBalanced_helper(root)<<endl;
 
@@ -695,11 +738,14 @@ int main()
   // {
   //     cout<<v1[i]<<" ";
   // }
-levelWisetraversal(root);
-cout<<"----"<<endl;
-  CreateDublicate_InsertLeft(root);
+// levelWisetraversal(root);
+// cout<<"----"<<endl;
+//   CreateDublicate_InsertLeft(root);
 
-  levelWisetraversal(root);
+//   levelWisetraversal(root);
+int sum;
+cin>>sum;
+  pair_sum(root,sum);
 delete root;// to delete the node recursively
 
     main();
