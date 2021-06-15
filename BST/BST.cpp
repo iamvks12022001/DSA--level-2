@@ -84,16 +84,60 @@ int BST_search(BinarySearchTree<int>* root,int value)
     }
     return 0;
 }
+
+vector<int> printRange_inBST(BinarySearchTree<int>* root,int low,int high)
+{
+    vector<int> vec;
+    vector<int>v1;
+    vector<int>v2;
+    if(root==NULL)
+    {
+        return v1;
+    }
+    if(root->data>=low && root->data<=high)
+    {
+    vec.push_back(root->data);
+    v1=printRange_inBST(root->left,low,high);
+    v2=printRange_inBST(root->right,low,high);
+    }
+
+    else if(root->data>high)
+    {
+        v1=printRange_inBST(root->left,low,high);
+    }
+   else 
+    {
+       v2=printRange_inBST(root->right,low,high);
+    }
+
+    for(int i=0;i<v1.size();i++)
+    {
+        vec.push_back(v1[i]);
+    }
+    for(int i=0;i<v2.size();i++)
+    {
+        vec.push_back(v2[i]);
+    }
+
+    return vec;
+}
 int main()
 {
     
     BinarySearchTree<int>* root=takeInputLevelWise();
-    cout<<"give data to search"<<endl;
-    int val;
-    cin>>val;
-    cout<<BST_search(root,val)<<endl;;
-
-
+    // cout<<"give data to search"<<endl;
+    // int val;
+    // cin>>val;
+    // cout<<BST_search(root,val)<<endl;;
+    int low,high;
+    cout<<"give low and high"<<endl;
+    cin>>low>>high;
+     vector<int> vec=printRange_inBST(root,low,high);
+     sort(vec.begin(),vec.end());
+     for(int i=0;i<vec.size();i++)
+     {
+      cout<<vec[i]<<" ";
+     }
     delete root;// to delete the node recursively
    main();
    
