@@ -121,6 +121,52 @@ vector<int> printRange_inBST(BinarySearchTree<int>* root,int low,int high)
 
     return vec;
 }
+pair<bool,pair<int,int>> isBST_helper(BinarySearchTree<int>* root)
+{
+   
+     pair<bool,pair<int,int>>p_right;
+     pair<bool,pair<int,int>>p_left;
+     pair<bool,pair<int,int>>p;
+     if(root==NULL)
+     {
+         p=make_pair(true,make_pair(-10000000,-10000000));
+         return p;
+     }   
+        p_left=isBST_helper(root->left);
+        p_right=isBST_helper(root->right);
+     
+        bool ans;
+        if(p_left.second.first==-10000000 && p_right.second.first!=-10000000)
+        {
+            ans= root->data<=p_right.second.first;
+            p=make_pair((p_left.first && p_right.first) && ans,make_pair(min(p_right.second.first,root->data),max(p_right.second.second,root->data)));
+        }
+        else{
+                if(p_left.second.first!=-10000000 && p_right.second.first==-10000000)
+                {
+                    ans= root->data>=p_left.second.second;
+                    p=make_pair((p_left.first && p_right.first) && ans,make_pair(min(p_left.second.first,root->data),max(p_left.second.second,root->data)));
+                }
+                else {
+                        if (p_left.second.first==-10000000 && p_right.second.first==-10000000)
+                        {
+                            ans=true;
+                            p=make_pair((p_left.first && p_right.first) && ans,make_pair(root->data,root->data));
+
+                        }
+                        else{
+                             ans=(p_left.second.second<=root->data && root->data<=p_right.second.first);
+                             p=make_pair((p_left.first && p_right.first) && ans,make_pair(min(p_left.second.first,min(p_right.second.first,root->data)),max(p_left.second.second,max(p_right.second.second,root->data))));
+                            }
+                    }
+           }
+        
+        return p;
+}
+bool isBST(BinarySearchTree<int>* root)
+{
+    return isBST_helper(root).first;
+}
 int main()
 {
     
@@ -129,15 +175,18 @@ int main()
     // int val;
     // cin>>val;
     // cout<<BST_search(root,val)<<endl;;
-    int low,high;
-    cout<<"give low and high"<<endl;
-    cin>>low>>high;
-     vector<int> vec=printRange_inBST(root,low,high);
-     sort(vec.begin(),vec.end());
-     for(int i=0;i<vec.size();i++)
-     {
-      cout<<vec[i]<<" ";
-     }
+    // int low,high;
+    // cout<<"give low and high"<<endl;
+    // cin>>low>>high;
+    //  vector<int> vec=printRange_inBST(root,low,high);
+    //  sort(vec.begin(),vec.end());
+    //  for(int i=0;i<vec.size();i++)
+    //  {
+    //   cout<<vec[i]<<" ";
+    //  }
+    //  cout<<endl;
+     cout<<isBST(root)<<endl;
+
     delete root;// to delete the node recursively
    main();
    
