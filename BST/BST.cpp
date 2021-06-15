@@ -167,6 +167,28 @@ bool isBST(BinarySearchTree<int>* root)
 {
     return isBST_helper(root).first;
 }
+ BinarySearchTree<int>* makeBST(BinarySearchTree<int>* root,vector<int> &arr, int start,int stop)
+{
+    if(start>stop )
+    {
+        return NULL;
+    }
+
+    int mid=(start+stop)/2;
+    BinarySearchTree<int>* newnode=new BinarySearchTree<int>(arr[mid]);
+    newnode->left=makeBST(newnode,arr,start,mid-1);
+    newnode->right=makeBST(newnode,arr,mid+1,stop);
+     return newnode;
+}
+BinarySearchTree<int>* sortedArrToBST(vector<int> &arr, int n)
+{
+    // Write your code here.
+    int mid=n/2;
+   BinarySearchTree<int>* root=new BinarySearchTree<int>(arr[mid]);
+   root->left=makeBST(root,arr,0,mid-1);
+   root->right=makeBST(root,arr,mid+1,n-1);
+   return root;
+}
 int main()
 {
     
