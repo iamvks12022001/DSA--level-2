@@ -219,6 +219,45 @@ BinarySearchTree<int>* bstToSortedDLL(BinarySearchTree<int> *root)
  
     return (head==NULL)?newnode:head;
 }
+struct abc{
+    BinarySearchTree<int>* first;
+    BinarySearchTree<int>* second;
+};
+abc bstToSortedDLLHelper(BinarySearchTree<int> *root){
+     if(root==NULL)
+    {
+         abc p1;
+         p1.first=NULL;
+         p1.second=NULL;
+         return p1;
+    }
+   abc  prev_node=bstToSortedDLLHelper(root->left);
+    BinarySearchTree<int>* head=prev_node.first;
+   
+    BinarySearchTree<int>* newnode=new BinarySearchTree<int>(root->data);
+    if(prev_node.second!=NULL){
+       prev_node.second->right=newnode;
+    }
+    newnode->left=prev_node.second;
+   
+    abc next_node=bstToSortedDLLHelper(root->right);
+    BinarySearchTree<int>* tail=next_node.second;
+    if(next_node.first!=NULL){
+      next_node.first->left=newnode;
+    }
+    newnode->right=next_node.first;
+    abc p2;
+    p2.first=(head==NULL)?newnode:head;
+    p2.second=(tail==NULL)?newnode:tail;
+    return p2;
+}
+BinarySearchTree<int>* bstToSortedDLL_better(BinarySearchTree<int> *root)
+{
+	// Write your code here.
+    abc p=bstToSortedDLLHelper(root);
+    return p.first;
+   
+}
 int main()
 {
     
@@ -238,11 +277,17 @@ int main()
     //  }
     //  cout<<endl;
     // cout<<isBST(root)<<endl;
-    BinarySearchTree<int>* head= bstToSortedDLL(root);
-    while(root!=NULL)
+    // BinarySearchTree<int>* head= bstToSortedDLL(root);
+    // while(root!=NULL)
+    // {
+    //     cout<<head->data<<" ";
+    //     head=head->right;
+    // }
+     BinarySearchTree<int>* head1= bstToSortedDLL_better(root);
+      while(head1!=NULL)
     {
-        cout<<head->data<<" ";
-        head=head->right;
+        cout<<head1->data<<" ";
+        head1=head1->right;
     }
     delete root;// to delete the node recursively
    main();
