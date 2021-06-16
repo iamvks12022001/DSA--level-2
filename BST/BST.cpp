@@ -167,7 +167,7 @@ bool isBST(BinarySearchTree<int>* root)
 {
     return isBST_helper(root).first;
 }
- BinarySearchTree<int>* makeBST(BinarySearchTree<int>* root,vector<int> &arr, int start,int stop)
+ BinarySearchTree<int>* makeBST(vector<int> &arr, int start,int stop)
 {
     if(start>stop )
     {
@@ -176,8 +176,8 @@ bool isBST(BinarySearchTree<int>* root)
 
     int mid=(start+stop)/2;
     BinarySearchTree<int>* newnode=new BinarySearchTree<int>(arr[mid]);
-    newnode->left=makeBST(newnode,arr,start,mid-1);
-    newnode->right=makeBST(newnode,arr,mid+1,stop);
+    newnode->left=makeBST(arr,start,mid-1);
+    newnode->right=makeBST(arr,mid+1,stop);
      return newnode;
 }
 BinarySearchTree<int>* sortedArrToBST(vector<int> &arr, int n)
@@ -185,9 +185,39 @@ BinarySearchTree<int>* sortedArrToBST(vector<int> &arr, int n)
     // Write your code here.
     int mid=n/2;
    BinarySearchTree<int>* root=new BinarySearchTree<int>(arr[mid]);
-   root->left=makeBST(root,arr,0,mid-1);
-   root->right=makeBST(root,arr,mid+1,n-1);
+   root->left=makeBST(arr,0,mid-1);
+   root->right=makeBST(arr,mid+1,n-1);
    return root;
+}
+
+BinarySearchTree<int>* bstToSortedDLL(BinarySearchTree<int> *root)
+{
+	// Write your code here.
+    if(root==NULL)
+    {
+        return NULL;
+    }
+    BinarySearchTree<int>* prev_node=bstToSortedDLL(root->left);
+    BinarySearchTree<int>* head=prev_node;
+    if(prev_node!=NULL ){
+        while(prev_node->right!=NULL)
+        {
+            prev_node=prev_node->right;
+        }
+    }
+    BinarySearchTree<int>* newnode=new BinarySearchTree<int>(root->data);
+    if(prev_node!=NULL){
+       prev_node->right=newnode;
+    }
+    newnode->left=prev_node;
+   
+    BinarySearchTree<int>* next_node=bstToSortedDLL(root->right);
+    if(next_node!=NULL){
+      next_node->left=newnode;
+    }
+    newnode->right=next_node;
+ 
+    return (head==NULL)?newnode:head;
 }
 int main()
 {
@@ -207,8 +237,13 @@ int main()
     //   cout<<vec[i]<<" ";
     //  }
     //  cout<<endl;
-     cout<<isBST(root)<<endl;
-
+    // cout<<isBST(root)<<endl;
+    BinarySearchTree<int>* head= bstToSortedDLL(root);
+    while(root!=NULL)
+    {
+        cout<<head->data<<" ";
+        head=head->right;
+    }
     delete root;// to delete the node recursively
    main();
    
