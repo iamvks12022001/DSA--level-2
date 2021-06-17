@@ -258,6 +258,35 @@ BinarySearchTree<int>* bstToSortedDLL_better(BinarySearchTree<int> *root)
     return p.first;
    
 }
+
+vector<int>* getRootToNodePath(BinarySearchTree<int>*root,int data)
+{
+    if(root==NULL)
+    {
+        return NULL;
+    }
+    if(root->data==data)
+    {
+        vector<int>* output=new vector<int>();
+        output->push_back(root->data);
+        return output;
+    }
+
+    vector<int>* leftOutput=getRootToNodePath(root->left,data);
+    if(leftOutput!=NULL)
+    {
+        leftOutput->push_back(root->data);
+        return leftOutput;
+    }
+
+    vector<int>* rightOutput=getRootToNodePath(root->right,data);
+    if(rightOutput!=NULL){
+        rightOutput->push_back(root->data);
+        return rightOutput;
+    }else{
+        return NULL;
+    }
+}
 int main()
 {
     
@@ -283,12 +312,19 @@ int main()
     //     cout<<head->data<<" ";
     //     head=head->right;
     // }
-     BinarySearchTree<int>* head1= bstToSortedDLL_better(root);
-      while(head1!=NULL)
+    //  BinarySearchTree<int>* head1= bstToSortedDLL_better(root);
+    // while(head1!=NULL)
+    // {
+    //     cout<<head1->data<<" ";
+    //     head1=head1->right;
+    // }
+
+    vector<int>* output=getRootToNodePath(root,8);
+    for(int i=0;i<output->size();i++)
     {
-        cout<<head1->data<<" ";
-        head1=head1->right;
+        cout<<output->at(i)<<endl;
     }
+    delete output;
     delete root;// to delete the node recursively
    main();
    
