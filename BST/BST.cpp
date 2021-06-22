@@ -437,7 +437,52 @@ int lowestCommonAncestorIN_BST(BinarySearchTree<int> *root, int x, int y)
 
     return ans;
 }
+pair<bool,tuple<int,int,int>> largestBST_helper(BinarySearchTree<int>* root) {
+    
+     if(root==NULL)
+     {
+          pair<bool,tuple<int,int,int>>p=make_pair(true,make_tuple(INT_MAX,INT_MIN,0));
+          return p;     
+     }
 
+     pair<bool,tuple<int,int,int>>p1=largestBST_helper(root->left);
+     pair<bool,tuple<int,int,int>>p2=largestBST_helper(root->right);
+     
+     int height=max(get<2>(p1.second),get<2>(p2.second));
+      pair<bool,tuple<int,int,int>>p4;
+     if(p1.first==false || p2.first==false)
+     {
+         p4=make_pair(false,make_tuple(get<1>(p1.second),get<0>(p2.second),height));
+         return p4;
+     }
+     if(get<1>(p1.second)<root->data && get<0>(p2.second)>root->data)
+     {
+       int x=get<0>(p1.second);
+       int y=get<1>(p2.second);
+         if(x==INT_MAX)
+         {
+          x=root->data;
+         
+         }
+         if(y==INT_MIN)
+         {
+          y=root->data;
+         
+         }
+         height=get<2>(p1.second)+get<2>(p2.second);
+         pair<bool,tuple<int,int,int>>p3=make_pair(true,make_tuple(x,y,height+1));
+         return p3;
+     }
+     p4=make_pair(false,make_tuple(get<1>(p1.second),get<0>(p2.second),height));
+     return p4;
+
+}
+int largestBST(BinarySearchTree<int>* root) {
+    
+     pair<bool,tuple<int,int,int>>p1=largestBST_helper(root); 
+     return get<2>(p1.second);
+
+}
 int main()
 {
     
@@ -488,10 +533,12 @@ int main()
 	// b.deleteData(10);
 	// b.deleteData(100);
 	// b.printTree();
-  int x,y;
-  cout<<"give x and y"<<endl;
-  cin>>x>>y;
-    cout<<lowestCommonAncestorIN_BST(root,x,y)<<endl;
+  // int x,y;
+  // cout<<"give x and y"<<endl;
+  // cin>>x>>y;
+  //   cout<<lowestCommonAncestorIN_BST(root,x,y)<<endl;
+
+  cout<<largestBST(root)<<endl;
   //  delete root;// to delete the node recursively
    
 
