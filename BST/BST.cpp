@@ -408,10 +408,40 @@ vector<int>* getRootToNodePath(BinarySearchTree<int>*root,int data)
         return NULL;
     }
 }
+
+int lowestCommonAncestorIN_BST(BinarySearchTree<int> *root, int x, int y)
+{
+	//    Write your code here
+    int ans=-1;
+    if(root->data>=min(x,y) && root->data<=max(x,y))
+    {
+      ans=root->data;
+      return ans;
+    }
+    
+    
+    
+    if(root->data> x && root->left!=NULL)
+    {
+        ans=lowestCommonAncestorIN_BST(root->left,x,y);
+    }
+    if(root->data< x && root->right!=NULL)
+    {
+        ans=lowestCommonAncestorIN_BST(root->right,x,y);
+    }
+    
+    if(ans==-1)
+    {
+        return -1;
+    }
+
+    return ans;
+}
+
 int main()
 {
     
-  //  BinarySearchTree<int>* root=takeInputLevelWise();
+     BinarySearchTree<int>* root=takeInputLevelWise();
     // cout<<"give data to search"<<endl;
     // int val;
     // cin>>val;
@@ -447,19 +477,24 @@ int main()
     // }
     // delete output;
 
-    BST b;
-	b.insert(10);
-	b.insert(5);
-	b.insert(20);
-	b.insert(7);
-	b.insert(3);
-	b.insert(15);
-	b.printTree();
-	b.deleteData(10);
-	b.deleteData(100);
-	b.printTree();
-    
+  //   BST b;
+	// b.insert(10);
+	// b.insert(5);
+	// b.insert(20);
+	// b.insert(7);
+	// b.insert(3);
+	// b.insert(15);
+	// b.printTree();
+	// b.deleteData(10);
+	// b.deleteData(100);
+	// b.printTree();
+  int x,y;
+  cout<<"give x and y"<<endl;
+  cin>>x>>y;
+    cout<<lowestCommonAncestorIN_BST(root,x,y)<<endl;
   //  delete root;// to delete the node recursively
    
+
+   main();
    
 }
