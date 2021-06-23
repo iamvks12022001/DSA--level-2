@@ -554,6 +554,90 @@ BinarySearchTree<int> *convertBstToGreaterSum(BinarySearchTree<int> *root)
     return root;
 }
 
+int countNodes(BinarySearchTree<int> *root) {
+    if (root == NULL) {
+        return 0;
+    }
+
+    return countNodes(root->left) + countNodes(root->right) + 1;
+}
+
+void printNodesSumToS(BinarySearchTree<int> *root, int s) {
+    if (root == NULL) {
+        return;
+    }
+
+    int totalCount = countNodes(root);
+    int count = 0;
+
+    stack<BinarySearchTree<int> *> inorder;
+    stack<BinarySearchTree<int> *> revInorder;
+
+    BinarySearchTree<int> *currentNode = root;
+    while (currentNode != NULL) {
+        inorder.push(currentNode);
+        currentNode = currentNode->left;
+    }
+
+    currentNode = root;
+    while (currentNode != NULL) {
+        revInorder.push(currentNode);
+        currentNode = currentNode->right;
+    }
+
+    while (count < totalCount - 1) {
+        BinarySearchTree<int> *inorderTop = inorder.top();
+        BinarySearchTree<int> *revInorderTop = revInorder.top();
+        if (inorderTop->data + revInorderTop->data == s) {
+            cout << inorderTop->data << " " << revInorderTop->data << endl;
+
+            BinarySearchTree<int> *top = inorderTop;
+            inorder.pop();
+            count++;
+            if (top->right != NULL) {
+                top = top->right;
+                while (top != NULL) {
+                    inorder.push(top);
+                    top = top->left;
+                }
+            }
+
+            top = revInorderTop;
+            revInorder.pop();
+            count++;
+            if (top->left != NULL) {
+                top = top->left;
+                while (top != NULL) {
+                    revInorder.push(top);
+                    top = top->right;
+                }
+            }
+        } else if (inorderTop->data + revInorderTop->data > s) {
+            BinarySearchTree<int> *top = revInorderTop;
+            revInorder.pop();
+            count++;
+            if (top->left != NULL) {
+                top = top->left;
+                while (top != NULL) {
+                    revInorder.push(top);
+                    top = top->right;
+                }
+            }
+        } else {
+            BinarySearchTree<int> *top = inorderTop;
+            inorder.pop();
+            count++;
+            if (top->right != NULL) {
+                top = top->right;
+                while (top != NULL) {
+                    inorder.push(top);
+                    top = top->left;
+                }
+            }
+        }
+    }
+}
+
 int main()
 {
     
@@ -609,10 +693,11 @@ int main()
   // cin>>x>>y;
   //   cout<<lowestCommonAncestorIN_BST(root,x,y)<<endl;
 
-  cout<<largestBST(root)<<endl;
+  // cout<<largestBST(root)<<endl;
   //  delete root;// to delete the node recursively
-   
-
+   int sum;
+   cin>>sum;
+  printNodesSumToS(root,sum);
    main();
    
 }
