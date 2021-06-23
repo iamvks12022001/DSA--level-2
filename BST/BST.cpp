@@ -757,6 +757,36 @@ vector<BinarySearchTree<int>*> printNodesAtDistanceK(BinarySearchTree<int>* root
 
 return temp;
  }
+int pathRootToLeaf(BinarySearchTree<int>* root,int k,vector<int> s,int sum,vector<vector<int>>& v1)
+{
+  if(root->left==NULL && root->right==NULL)
+  {
+    s.push_back(root->data);
+    sum+=root->data;
+    
+    if(k==sum)
+    {
+      v1.push_back(s);
+      return 1;
+    }
+    return 0;
+  }
+  
+  s.push_back(root->data);
+  sum+=root->data;
+  int l=0;
+  int r=0;
+  if(root->left!=NULL){
+   l=pathRootToLeaf(root->left,k,s,sum,v1);
+  }
+  if(root->right!=NULL){
+   r=pathRootToLeaf(root->right,k,s,sum,v1);
+  }
+
+  return l+r;
+
+}
+
 int main()
 {
     
@@ -817,16 +847,22 @@ int main()
   //  int sum;
   //  cin>>sum;
   // printNodesSumToS(root,sum);
-  int k;
-  cin>>k;
-  int targetdata;
-  cin>>targetdata;
-  BinarySearchTree<int>* target=targetnode(root,targetdata);
-    vector<BinarySearchTree<int>*>v=  printNodesAtDistanceK(root,target, k);
-    for(int i=0;i<v.size();i++)
-    {
-      cout<<v[i]->data<<" ";
-    }
+  // int k;
+  // cin>>k;
+  // int targetdata;
+  // cin>>targetdata;
+  // BinarySearchTree<int>* target=targetnode(root,targetdata);
+  //   vector<BinarySearchTree<int>*>v=  printNodesAtDistanceK(root,target, k);
+  //   for(int i=0;i<v.size();i++)
+  //   {
+  //     cout<<v[i]->data<<" ";
+  //   }
+int k;
+cin>>k;
+vector<int> v;
+vector<vector<int>> v1;
+cout<<pathRootToLeaf(root,k,v,0,v1);//this give total number of path avl
+//v1 is ans basically this return paths
    main();
    
 }
