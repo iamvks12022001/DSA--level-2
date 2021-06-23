@@ -637,7 +637,126 @@ void printNodesSumToS(BinarySearchTree<int> *root, int s) {
         }
     }
 }
+struct dir{
+    BinarySearchTree<int>* first;
+    int second;
+};
+vector<dir> pathToTarget(BinarySearchTree<int>* root, BinarySearchTree<int>* target)
+{
+    if(root ==NULL)
+    {
+        vector<dir>v;
+        return v;
+    }
+    if(root==target)
+    {
+        vector<dir>v2;
+        dir d1;
+        d1.first=root;
+        d1.second=2;
+            v2.push_back(d1);
+        return v2;
+    }
+     vector<dir>v1;
+        dir d1;
+        d1.first=root;
+        d1.second=0;//left
+     v1=pathToTarget(root->left,target);
+    if(v1.size()==0){
+       v1=pathToTarget(root->right,target);
+        d1.first=root;
+        d1.second=1;//right
+    }
+    if(v1.size()!=0)
+    {
+        v1.push_back(d1);
+    }
+    return v1;
+}
 
+vector<BinarySearchTree<int>*> printALLnodeuptoDi_K(BinarySearchTree<int>* root,int d,int k)
+{
+    if(root==NULL)
+    {
+        vector<BinarySearchTree<int>*> a;
+        return a;
+    }
+    if(k==0)
+    {
+        vector<BinarySearchTree<int>*> v;
+        v.push_back(root);
+        return v;
+    }
+     vector<BinarySearchTree<int>*> ans;
+    if(d==0)
+    {
+        ans=printALLnodeuptoDi_K(root->right,2,k-1);
+    }
+    if(d==1)
+    {
+        ans=printALLnodeuptoDi_K(root->left,2,k-1);
+    }
+    if(d==2)
+    {
+        vector<BinarySearchTree<int>*> temp;
+        ans=printALLnodeuptoDi_K(root->left,2,k-1);
+        temp=printALLnodeuptoDi_K(root->right,2,k-1);
+        for(int i=0;i<temp.size();i++)
+        {
+            ans.push_back(temp[i]);
+        }
+    }
+    return ans;
+}
+vector<BinarySearchTree<int>*> printNodesAtDistanceK(BinarySearchTree<int>* root, BinarySearchTree<int>* target, int k) {
+    // Write your code here.
+    if(root==NULL)
+    {
+        vector<BinarySearchTree<int>*> v;
+        return v;
+    }
+
+  vector<dir> v1=pathToTarget(root,target);
+//     for(int i=0;i<v1.size();i++)
+//     {
+//         cout<<(v1[i].first)->data<<" "<<(v1[i].second)<<endl;
+//     }
+    vector<BinarySearchTree<int>*> ans;
+    for(int i=0;i<v1.size();i++)
+    {     
+        if(k-i<0)
+        {
+            break;
+        }
+         vector<BinarySearchTree<int>*> temp;
+         temp= printALLnodeuptoDi_K(v1[i].first,v1[i].second,k-i);
+        for(int i=0;i<temp.size();i++)
+        {
+            ans.push_back(temp[i]);
+        }
+    }
+   return ans;
+}
+ BinarySearchTree<int>* targetnode( BinarySearchTree<int>* root,int data)
+ {
+   if(root==NULL)
+   {
+     return NULL;
+   }
+   if(root->data==data)
+   {
+     return root;
+   }
+  
+  BinarySearchTree<int>* temp;
+  temp=targetnode(root->left,data);
+  if(temp==NULL)
+  {
+    temp=targetnode(root->right,data);
+  }
+
+return temp;
+ }
 int main()
 {
     
@@ -695,9 +814,19 @@ int main()
 
   // cout<<largestBST(root)<<endl;
   //  delete root;// to delete the node recursively
-   int sum;
-   cin>>sum;
-  printNodesSumToS(root,sum);
+  //  int sum;
+  //  cin>>sum;
+  // printNodesSumToS(root,sum);
+  int k;
+  cin>>k;
+  int targetdata;
+  cin>>targetdata;
+  BinarySearchTree<int>* target=targetnode(root,targetdata);
+    vector<BinarySearchTree<int>*>v=  printNodesAtDistanceK(root,target, k);
+    for(int i=0;i<v.size();i++)
+    {
+      cout<<v[i]->data<<" ";
+    }
    main();
    
 }
