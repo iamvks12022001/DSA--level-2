@@ -786,7 +786,96 @@ int pathRootToLeaf(BinarySearchTree<int>* root,int k,vector<int> s,int sum,vecto
   return l+r;
 
 }
+struct gfg{
+    int first;
+    int second;
 
+};
+gfg checkCousines(BinarySearchTree<int>* root,int one,int two)
+{
+    if(root==NULL)
+    {
+        gfg p;
+        p.first=-1;
+        p.second=0;
+     
+        return p;
+    }
+    
+    if(root->data==one|| root->data==two)
+    {
+        
+        gfg p;
+         p.first=1;
+         p.second=0; 
+       return p;
+    }
+   gfg p1,p2,p3;
+    p1=checkCousines(root->left,one,two);
+    p2=checkCousines(root->right,one,two);
+    //cout<<p1.first<<" "<<p2.first<<" "<<p1.second<<" "<<p2.second<<endl;
+    if(p1.first==2 || p2.first==2)
+    {
+         p3.first=2;
+            p3.second=1;
+            return p3;
+    }
+    if(p1.first==1 && p2.first==1)
+    {
+        if(p1.second==p2.second && p1.second>=1)
+        {
+            p3.first=2;
+            p3.second+=1;
+            return p3;
+        }
+        else{
+            p3.first=-1;
+            p3.second=0;
+        }
+    }else{
+        if(p1.first==1)
+        {
+             p3.first=1;
+             p3.second=p1.second+1;
+        }else{
+            if(p2.first==1)
+            {
+               p3.first=1;
+               p3.second=p2.second+1; 
+            }else{
+                p3.first=-1;
+                p3.second=0;
+            }
+        }
+    }
+    return p3;
+}
+string areNodesCousins(BinarySearchTree<int>* root, vector<int> arr) {
+    // Write your code here
+    gfg p=checkCousines(root,arr[0],arr[1]);
+    if(p.first==2)
+    {
+        return "YES";
+    }
+    return "NO";
+}
+vector<int> longestLeaftoRoot(BinarySearchTree<int>* root)
+{
+  if(root==NULL)
+  {
+    vector<int> v;
+    return v;
+  }
+  vector<int> v1=longestLeaftoRoot(root->left);
+  vector<int>v2=longestLeaftoRoot(root->right);
+  if(v1.size()>v2.size())
+  {
+    v1.push_back(root->data);
+    return v1;
+  }
+  v2.push_back(root->data);
+  return v2;
+}
 int main()
 {
     
@@ -857,12 +946,21 @@ int main()
   //   {
   //     cout<<v[i]->data<<" ";
   //   }
-int k;
-cin>>k;
-vector<int> v;
-vector<vector<int>> v1;
-cout<<pathRootToLeaf(root,k,v,0,v1);//this give total number of path avl
+// int k;
+// cin>>k;
+// vector<int> v;
+// vector<vector<int>> v1;
+// cout<<pathRootToLeaf(root,k,v,0,v1);//this give total number of path avl
 //v1 is ans basically this return paths
+// int d1,d2;
+// cin>>d1>>d2;
+// vector<int> v={d1,d2};
+// cout<<areNodesCousins(root,v);
+vector<int>v=longestLeaftoRoot(root);
+for(int i=0;i<v.size();i++)
+{
+  cout<<v[i]<<" ";
+}
    main();
    
 }
